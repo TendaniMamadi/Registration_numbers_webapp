@@ -1,30 +1,37 @@
-<section class="container">
-    <form action="/" method="POST">
-        <h1>Registration_numbers</h1>
 
-        <div class="input">
-            <label for="textarea">Registration_number:</label>
-            <input type="text" class="inputArea" placeholder="Please enter registration"><br>
-            <input type="button" class="addingButton" value="Add">
-        </div>
+<body>
+    <section class="container">
+        <form action="/add" method="POST">
+            <h1>Registration Numbers</h1>
 
-        <div class="Towns">
+            <div class="input">
+                <label for="number">Registration Number:</label>
+                <input type="text" name="number" placeholder="Please enter registration" required><br>
+            </div>
 
-            <label for="Cities">Select city:</label>
+            <button type="submit" class="addingButton" value="Add">Registration Add</button>
+        </form>
 
-
-            <select name="city" id="city">
+        <form action="/filter" method="POST">
+            <label for="city">Filter by City:</label>
+            <select name="city" id="filterCity">
                 <option value=""></option>
-                <option value="Cape_Town">Cape Town</option>
+                <option value="Cape Town">Cape Town</option>
                 <option value="Johannesburg">Johannesburg</option>
                 <option value="Durban">Durban</option>
                 <option value="Polokwane">Polokwane</option>
             </select>
-            <input type="button" class="DisplayBtn" value="Display">
-        </div>
+
+            <button type="submit" class="DisplayBtn" value="Display">Registration filter</button>
+        </form>
 
         <div class="registationPlate">
-
+            <ul>
+                {{#each registrations}}
+                <li>{{this.number}} - {{this.city}}</li>
+                {{/each}}
+            </ul>
         </div>
-    </form>
-</section>
+    </section>
+</body>
+</html>

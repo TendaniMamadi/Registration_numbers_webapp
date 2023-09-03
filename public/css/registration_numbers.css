@@ -4,45 +4,53 @@
     box-sizing: border-box;
 }
 
+body {
+    background: url("https://www.toliasedition.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/2/0/20230201_145436.jpg") center/cover no-repeat;
+    height: 100vh; 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.container {
+    text-align: center;
+}
+
 .registationPlate {
-    width: 110px;
-    height: 10px;
+    width: 125%;
+    height: 55px;
     border: solid black 3px;
     margin: 0 auto;
-    padding: 10px 25px;
+    padding: 0px 25px;
     background: orange;
-    border-radius: 5%;
+    border-radius: 10%;
    
 }
 
 .Towns {
-    width: 100%;
-    height: 100%;   
-    padding: 10px 730px;
     margin: 0 auto;
-    
 }
 
-label{
-    display: flex;
-}
 
-h1{
+h1 {
     text-align: center;
     border: 1px solid black;
     margin: 0 auto;
+    margin-bottom: 380px;
     padding: 10px 0px;
 }
 
-.input{
-    
-    width: 100%;
-    height: 100%;   
-    padding: 10px 730px;
+.input {
     margin: 0 auto;
 }
 
-.addingButton{
+.addingButton {
+    margin-top: 15px;
+    color: aqua;
+    background: royalblue;
+}
+
+.DisplayBtn{
     margin-top: 15px;
     color: aqua;
     background: royalblue;

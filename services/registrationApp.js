@@ -1,51 +1,41 @@
-function registrationApp() {
-    var plates = [];
+export default function RegistrationApp(db) {
+    const plates = [];
 
-    function setDisplayRegistration(registrationNumber) {
-        //create empty array to push registration
-        //displays the number plate from that city
-
-        let currentPlates = registrationNumber.trim();
-
-        if (currentPlates.startsWith("CA")) {
-            plates.push(currentPlates);
-
+    // In registrationApp.js or a separate module
+    async function addRegistrationPlate({ number, code,towns_id }) {
+        try {
+            await db.none('INSERT INTO registrationnumber (number, code,towns_id ) VALUES ($1, $2, $3)', [number, code,towns_id ]);
+        } catch (error) {
+            throw error;
         }
-
-        if (currentPlates.endsWith("GP")) {
-            plates.push(currentPlates);
-
-        }
-
-        if (currentPlates.startsWith("ND")) {
-            plates.push(currentPlates);
-
-        }
-
-        if (currentPlates.endsWith("L")) {
-            plates.push(currentPlates);
-
-        }
-
     }
 
-    function getDisplayRegistration() {
 
-        return plates;
-        
+    // In registrationApp.js or a separate module
+    async function getRegistrationPlates() {
+        try {
+            const plates = await db.any('SELECT * FROM registrationnumber');
+            return plates;
+        } catch (error) {
+            throw error;
+        }
     }
 
-   
 
-    function setFilter(city) {
-        //function that filters data per city
-
+    // In registrationApp.js or a separate module
+    async function filterByCity({ city }) {
+        try {
+            const filteredPlates = await db.any('SELECT names FROM registrationnumber WHERE towns_id = $1', [towns_id]);
+            return filteredPlates;
+        } catch (error) {
+            throw error;
+        }
     }
 
 
     return {
-        setDisplayRegistration,
-        getDisplayRegistration,
-        setFilter
-    }
+        addRegistrationPlate,
+        getRegistrationPlates,
+        filterByCity,
+    };
 }
