@@ -60,17 +60,18 @@ app.post('/', async (req, res) => {
 });
 
 // Filter route (POST)
-app.post('/filter', (req, res) => {
+app.post('/filter', async (req, res) => {
     const selectedCity = req.body.city;
-   
+    const filteredRegistrations = await backendInstance.filterRegistrationsByCity(selectedCity);
+    res.render('index', { registrations: filteredRegistrations });
 });
+
 
 // Clear database route (POST)
 app.post('/clear', async (req, res) => {
-    backendInstance.deleteRegistration();
-    req.flash('clr', await registrationInstance.getClearMsg());
+    await backendInstance.deleteRegistrations();
+    req.flash('clr', 'All registrations have been deleted.');
     res.redirect('/');
-
 });
 
 

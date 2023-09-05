@@ -40,19 +40,30 @@
     </div>
 
 
-    <div>
-        {{#each numberPlate}}
-        <tr>
+    <div >
+        <ul class="d-flex flex-wrap" >
+            {{#each numberPlate}}
 
-            <ul class="d-flex flex-wrap">
-                <li class="plates">
-                    <a href="/registration">{{this.plate_number}}</a>
-                </li>
-            </ul>
+            <li class="plates">{{this.plate_number}}</li>
 
-        </tr>
-        {{/each}}
+            {{/each}}
+        </ul>
+
     </div>
+    <!-- Display filtered registrations -->
+    <h2>Filtered Registrations</h2>
+    <ul>
+        {{#each selectedCity}}
+        <li class="plates">{{this.plate_number}} - {{this.city_id}}</li>
+        {{/each}}
+    </ul>
+
+    <!-- Flash message for clearing the database -->
+    {{#if flash.clr}}
+    <div class="alert alert-success">
+        {{flash.clr}}
+    </div>
+    {{/if}}
 </body>
 
 </html>

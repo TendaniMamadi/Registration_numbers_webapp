@@ -5,7 +5,6 @@ export default function db_queries(db) {
             const result = await db.one(`
             INSERT INTO registration (plate_number, city_id)
             VALUES ($1, $2)
-            RETURNING registration_id;
         `, [plate_number, city_id]);
 
             return result.registration_id;
@@ -39,28 +38,26 @@ export default function db_queries(db) {
         }
     }
 
-    async function filterRegistrationsByCity(city_name) {
-        try {
-            const registrations = await db.any(`
-            SELECT r.*
-            FROM registration r
-            INNER JOIN city c ON r.city_id = c.city_id
-            WHERE c.city_name = $1;
-        `, [city_name]);
 
-            return registrations;
+    async function filterRegistrationsByCity(selectedCity) {
+        try {
+            const filteredRegistrations = await db.any('SELECT * FROM registration WHERE plate_number = $1', [selectedCity]);
+            return filteredRegistrations;
         } catch (error) {
-            throw new Error('Error filtering registrations: ' + error.message);
+            throw error;
         }
     }
 
-    async function deleteRegistration(registration_id) {
+
+
+    async function deleteRegistrations() {
         try {
-            await db.none('DELETE FROM registration WHERE registration_id = $1;', [registration_id]);
+            await db.none('DELETE FROM registration');
         } catch (error) {
-            throw new Error('Error deleting registration: ' + error.message);
+            throw error;
         }
     }
+
 
 
     return {
@@ -68,7 +65,7 @@ export default function db_queries(db) {
         insertIntoRegistrationPlateNumber,
         getAllRegistrations,
         filterRegistrationsByCity,
-        deleteRegistration
+        deleteRegistrations
     }
 
 }
