@@ -21,7 +21,7 @@ export default function FrontEndLogic() {
         } else if (city_name === "Johannesburg") {
             city_code = "GP";
         }
-       
+
     }
 
 
@@ -69,7 +69,7 @@ export default function FrontEndLogic() {
         clearMsg = "Successfully cleared!"
     }
 
-    function getClearMsg() {
+    async function getClearMsg() {
         return clearMsg
     }
 
@@ -83,7 +83,7 @@ export default function FrontEndLogic() {
         setCity,
         getCity,
         getCityCode,
-      //  errorMessage,
+        //  errorMessage,
         registrationAdded,
         clearButton,
         getClearButton,

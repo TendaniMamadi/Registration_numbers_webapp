@@ -1,40 +1,58 @@
 <body>
-    <section class="container">
-        <form action="/registration" method="POST">
+    <div class="centerDiv">
+        <section class="container">
+            <form action="/" method="POST">
 
-            <h1>Registration Numbers</h1>
+                <h1>Registration Numbers</h1>
 
-            <div class="input">
-                <label for="number">Registration Number:</label>
-                <input type="text" name="number" placeholder="Please enter registration" required><br>
-            </div>
+                <div class="input">
+                    <label for="number">Registration Number:</label>
+                    <input type="text" name="number" placeholder="Please enter registration" required><br>
+                </div>
 
-            <button type="submit" class="addingButton" value="Add">Registration Add</button>
-        </form>
-        <br>
-        <form action="/registration/filter" method="POST">
-            <div>
-                <label for="city">Filter by City:</label>
-                <select name="city" id="filterCity">
-                    <option value=""></option>
-                    <option value="Cape Town">Cape Town</option>
-                    <option value="Johannesburg">Johannesburg</option>
-                    <option value="Durban">Durban</option>
-                    <option value="Polokwane">Polokwane</option>
-                </select>
-            </div>
-            <button type="submit" class="DisplayBtn" value="Display">Registration filter</button>
-        </form>
-
-        <div>
-            <form action="/clear" method="POST">
-                <button type="submit">Clear Database</button>
+                <button type="submit" class="addingButton" value="Add">Registration Add</button>
             </form>
-        </div>
+            <br>
+            <form action="/filter" method="POST">
+                <div>
+                    <label for="city">Filter by City:</label>
+                    <select name="city" id="filterCity">
+                        <option value=""></option>
+                        <option value="">All</option>
+                        <option value="Cape Town">Cape Town</option>
+                        <option value="Johannesburg">Johannesburg</option>
+                        <option value="Durban">Durban</option>
+                        <option value="Polokwane">Polokwane</option>
+                    </select>
+                </div>
+                <button type="submit" class="DisplayBtn" value="Display">Registration filter</button>
+            </form>
+            <br>
 
-       
+            <div>
+                <form action="/clear" method="POST">
+                    <button type="submit">Clear Database</button>
+                </form>
+            </div>
 
-    </section>
+
+        </section>
+    </div>
+
+
+    <div>
+        {{#each numberPlate}}
+        <tr>
+
+            <ul class="d-flex flex-wrap">
+                <li class="plates">
+                    <a href="/registration">{{this.plate_number}}</a>
+                </li>
+            </ul>
+
+        </tr>
+        {{/each}}
+    </div>
 </body>
 
 </html>

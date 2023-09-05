@@ -5,6 +5,7 @@ import flash from 'express-flash';
 import session from 'express-session';
 import registrationApp from './factory function/registrationApp.js';
 import pgPromise from 'pg-promise';
+import backend from './database/db_queries.js'
 
 
 const DATABASE_URL = process.env.DATABASE_URL || 'postgres://vlciqtnc:bSO8NB8PbLYnE4QiLBeWH80GuUXwVwQD@trumpet.db.elephantsql.com/vlciqtnc?ssl=true'
@@ -21,8 +22,8 @@ if (process.env.NODE_ENV == 'production') {
 const pgp = pgPromise();
 const db = pgp(config);
 const app = express();
-const registrations = registrationApp();
-
+const backendInstance = backend(db)
+const registrationInstance = registrationApp(backendInstance);
 
 
 app.engine('handlebars', engine({
@@ -41,21 +42,40 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.json());
 
-// Routes
-app.get('/', (req, res) => {
-    res.render('index');
+
+// Index route
+app.get('/', async (req, res) => {
+    const numberPlate = await backendInstance.getAllRegistrations();
+   //console.log(numberPlate);
+    res.render('index',{numberPlate});
+});
+
+// Registration route (POST)
+app.post('/', async (req, res) => {
+    // Access the submitted data using req.body
+    const registrationNumber = req.body.number;
+    await backendInstance.insertIntoRegistrationPlateNumber(registrationNumber)
+    res.redirect('/');
+    
+});
+
+// Filter route (POST)
+app.post('/filter', (req, res) => {
+    const selectedCity = req.body.city;
+   
+});
+
+// Clear database route (POST)
+app.post('/clear', async (req, res) => {
+    backendInstance.deleteRegistration();
+    req.flash('clr', await registrationInstance.getClearMsg());
+    res.redirect('/');
+
 });
 
 
 
-app.post('/clear', (req, res) => {
-    // Clear your data source (e.g., the 'registrations' array)
-    registrations.length = 0;
-    res.redirect('/registration');
-});
-
-
-const PORT = process.env.PORT || 2023;
+const PORT = process.env.PORT || 2024;
 app.listen(PORT, (req, res) => {
     console.log('We taking off on port:', PORT)
 });
