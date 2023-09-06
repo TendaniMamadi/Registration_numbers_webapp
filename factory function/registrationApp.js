@@ -5,13 +5,31 @@ export default function FrontEndLogic() {
     let city_name = "";
 
 
+    // function addCity(city_code, city_name) {
+    //     if (!city_code) {
+    //         return;
+    //     }
+
+    //     city_code = city_code.charAt(0).toUpperCase() + city_code.slice(1).toLowerCase();
+
+    //     if (city_name === "Cape Town") {
+    //         city_code = "CA";
+    //     } else if (city_name === "Polokwane") {
+    //         city_code = "L";
+    //     } else if (city_name === "Durban") {
+    //         city_code = "ND";
+    //     } else if (city_name === "Johannesburg") {
+    //         city_code = "GP";
+    //     }
+
+    // }
     function addCity(city_code, city_name) {
         if (!city_code) {
-            return;
+            return city_code; // Return the original code if provided
         }
-
+    
         city_code = city_code.charAt(0).toUpperCase() + city_code.slice(1).toLowerCase();
-
+    
         if (city_name === "Cape Town") {
             city_code = "CA";
         } else if (city_name === "Polokwane") {
@@ -21,9 +39,10 @@ export default function FrontEndLogic() {
         } else if (city_name === "Johannesburg") {
             city_code = "GP";
         }
-
+    
+        return city_code; // Return the calculated or mapped city code
     }
-
+    
 
 
     function setRegistration(plate_number) {
@@ -48,6 +67,10 @@ export default function FrontEndLogic() {
 
     function getCityCode() {
         return city_code
+    }
+
+    function getCode(registration){
+        return registration.substring(0,2);
     }
 
     function registrationAdded() {
@@ -84,6 +107,7 @@ export default function FrontEndLogic() {
         getCity,
         getCityCode,
         //  errorMessage,
+        getCode,
         registrationAdded,
         clearButton,
         getClearButton,

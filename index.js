@@ -50,21 +50,53 @@ app.get('/', async (req, res) => {
     res.render('index',{numberPlate});
 });
 
-// Registration route (POST)
+//Registration route (POST)
 app.post('/', async (req, res) => {
     // Access the submitted data using req.body
     const registrationNumber = req.body.number;
-    await backendInstance.insertIntoRegistrationPlateNumber(registrationNumber)
+    const filteredRegistrations = await backendInstance.filterRegistrationsByCity(registrationInstance.getCode(registrationNumber));
+    const filters = await backendInstance.insertIntoRegistrationPlateNumber(registrationNumber,filteredRegistrations.id);
+    //console.log(filters);
+   
     res.redirect('/');
     
 });
+// app.post('/', async (req, res) => {
+//     const registrationNumber = req.body.number;
+//     const code = registrationInstance.getCode(registrationNumber);
+
+//     // Assuming filterRegistrationsByCity returns an array of filtered registrations
+//     const filteredRegistrations = await backendInstance.filterRegistrationsByCity(code);
+
+//     // Insert each matching registration number individually
+//     for (const registration of filteredRegistrations) {
+//         await backendInstance.insertIntoRegistrationPlateNumber(registrationNumber, registration.id);
+//     }
+
+//     res.redirect('/');
+// });
+
 
 // Filter route (POST)
 app.post('/filter', async (req, res) => {
     const selectedCity = req.body.city;
-    const filteredRegistrations = await backendInstance.filterRegistrationsByCity(selectedCity);
-    res.render('index', { registrations: filteredRegistrations });
+    const cityFilter = await backendInstance.filterCity(registrationInstance.addCity(selectedCity));
+    console.log(cityFilter);
+    res.render('index', {cityFilter});
 });
+// app.post('/filter', async (req, res) => {
+//     const selectedCity = req.body.city;
+
+//     // Assuming addCity returns the code based on the selected city
+//     const code = registrationInstance.addCity(selectedCity);
+
+//     // Assuming filterCity returns filtered results based on the city code
+//     const cityFilter = await backendInstance.filterCity(code);
+
+//     console.log(cityFilter);
+//     res.render('index', { cityFilter });
+// });
+
 
 
 // Clear database route (POST)

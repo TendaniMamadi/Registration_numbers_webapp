@@ -48,13 +48,14 @@
 
             {{/each}}
         </ul>
-
     </div>
+
+
     <!-- Display filtered registrations -->
     <h2>Filtered Registrations</h2>
     <ul>
-        {{#each selectedCity}}
-        <li class="plates">{{this.plate_number}} - {{this.city_id}}</li>
+        {{#each filterCity}}
+        <li class="plates">{{this}}</li>
         {{/each}}
     </ul>
 
