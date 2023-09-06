@@ -19,10 +19,10 @@
                     <select name="city" id="filterCity">
                         <option value=""></option>
                         <option value="">All</option>
-                        <option value="Cape Town">Cape Town</option>
-                        <option value="Johannesburg">Johannesburg</option>
-                        <option value="Durban">Durban</option>
-                        <option value="Polokwane">Polokwane</option>
+                        <option value="1">Cape Town</option>
+                        <option value="4">Johannesburg</option>
+                        <option value="3">Durban</option>
+                        <option value="2">Polokwane</option>
                     </select>
                 </div>
                 <button type="submit" class="DisplayBtn" value="Display">Registration filter</button>
@@ -54,8 +54,8 @@
     <!-- Display filtered registrations -->
     <h2>Filtered Registrations</h2>
     <ul>
-        {{#each filterCity}}
-        <li class="plates">{{this}}</li>
+        {{#each cityFilter}}
+        <li class="plates">{{this.cityFilter}}</li>
         {{/each}}
     </ul>
 

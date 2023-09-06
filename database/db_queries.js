@@ -21,13 +21,13 @@ export default function db_queries(db) {
                 INSERT INTO registration (plate_number, city_id)
                 VALUES ($1, $2)
             `, [plate_number, city_id]);
-    
+
             return result;
         } catch (error) {
             throw new Error('Error inserting registration: ' + error.message);
         }
     }
-    
+
     //displays everything that has been inserted
     async function getAllRegistrations() {
         try {
@@ -39,7 +39,6 @@ export default function db_queries(db) {
         }
     }
 
-    //selects the city_id 
     // async function filterRegistrationsByCity(selectedCity) {
     //     try {
     //         const filteredRegistrations = await db.any('SELECT city_id FROM city WHERE city_code = $1', [selectedCity]);
@@ -48,15 +47,19 @@ export default function db_queries(db) {
     //         throw error;
     //     }
     // }
+
+
+    //selects the city_id 
     async function filterRegistrationsByCity(selectedCity) {
-        try {
-            const filteredRegistrations = await db.any('SELECT city_id FROM city WHERE city_code = $1', [selectedCity]);
-            return filteredRegistrations;
-        } catch (error) {
-            throw error;
-        }
+     if(selectedCity){
+        let query = 'SELECT plate_number FROM registration WHERE city_id IN (SELECT city_id From city WHERE city_code = $1)';
+        return await db.any(query,[selectedCity]);
+     }else{
+        let allQuery = 'SELECT plate_number FROM registration';
+        return await db.any(allQuery);
+     }
     }
-    
+
 
     // async function filterCity(city_code) {
     //     try {
@@ -66,17 +69,17 @@ export default function db_queries(db) {
     //         throw error;
     //     }
     // }
-    async function filterCity(city_code) {
-        try {
-            const filteredRegistrations = await db.any('SELECT plate_number FROM registration JOIN city ON registration.city_id = city.city_id WHERE city_code = $1;', [city_code]);
-            return filteredRegistrations;
-        } catch (error) {
-            throw error;
-        }
-    }
-    
-    
-    
+    // async function filterCity(city_code) {
+    //     try {
+    //         const filteredRegistrations = await db.any('SELECT plate_number FROM registration JOIN city ON registration.city_id = city.city_id WHERE city_code = $1;', [city_code]);
+    //         return filteredRegistrations;
+    //     } catch (error) {
+    //         throw error;
+    //     }
+    // }
+
+
+
 
     //Remove the datafrom database
     async function deleteRegistrations() {
@@ -93,7 +96,7 @@ export default function db_queries(db) {
         insertIntoRegistrationPlateNumber,
         getAllRegistrations,
         filterRegistrationsByCity,
-        filterCity,
+        //filterCity,
         deleteRegistrations
     }
 

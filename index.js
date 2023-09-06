@@ -80,8 +80,8 @@ app.post('/', async (req, res) => {
 // Filter route (POST)
 app.post('/filter', async (req, res) => {
     const selectedCity = req.body.city;
-    const cityFilter = await backendInstance.filterCity(registrationInstance.addCity(selectedCity));
-    console.log(cityFilter);
+    const cityFilter = await backendInstance.filterRegistrationsByCity(selectedCity);
+    console.log(selectedCity);
     res.render('index', {cityFilter});
 });
 // app.post('/filter', async (req, res) => {
@@ -108,7 +108,7 @@ app.post('/clear', async (req, res) => {
 
 
 
-const PORT = process.env.PORT || 2024;
+const PORT = process.env.PORT || 3033;
 app.listen(PORT, (req, res) => {
     console.log('We taking off on port:', PORT)
 });
