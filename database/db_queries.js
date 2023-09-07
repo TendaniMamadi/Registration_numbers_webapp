@@ -1,29 +1,29 @@
 export default function db_queries(db) {
 
-    //inserts the plate number
-    // async function insertIntoRegistrationPlateNumber(plate_number,city_id) {
-    //     try {
-    //         const result = await db.none(`
-    //         INSERT INTO registration (plate_number,city_id)
-    //         VALUES ($1,$2)
-    //     `, [plate_number,city_id]);
-
-    //         return result;
-
-    //     } catch (error) {
-    //         throw new Error('Error inserting registration: ' + error.message);
-    //     }
-    // }
-
-    async function insertIntoRegistrationPlateNumber(registration_number,city_id) {
-    
+    async function getCityID(registration_number) {
         try {
-            const result = await db.none(`
-                INSERT INTO registrations (registration_number,city_id)
-                VALUES ($1,$2)
-            `, [registration_number,city_id]);
+            let firstTwoLettersOfTheRegNumber = registration_number.substring(0, 2);
+            const result = await db.oneOrNone(`SELECT city_id FROM cities WHERE city_code = $1`, [firstTwoLettersOfTheRegNumber])
+            if (result != null) {
 
-            return result;
+                return result;
+            } else {
+                return
+            }
+        } catch (error) {
+            throw new Error('Error inserting registration: ' + error.message);
+        }
+
+    }
+
+    async function insertIntoRegistrationPlateNumber(registration_number) {
+
+        try {
+            let city_id = await getCityID(registration_number)
+            if (city_id) {
+
+                await db.none(`INSERT INTO registrations (registration_number, city_id) VALUES ($1,$2)`, [registration_number, city_id.city_id]);
+            }
         } catch (error) {
             throw new Error('Error inserting registration: ' + error.message);
         }
@@ -41,46 +41,20 @@ export default function db_queries(db) {
         }
     }
 
-    // async function filterRegistrationsByCity(selectedCity) {
-    //     try {
-    //         const filteredRegistrations = await db.any('SELECT city_id FROM city WHERE city_code = $1', [selectedCity]);
-    //         return filteredRegistrations;
-    //     } catch (error) {
-    //         throw error;
-    //     }
-    // }
+    
 
-
-    //selects the city_id 
-    async function filterRegistrationsByCity(selectedCity) {
-        if (selectedCity) {
-            const query = `
-            SELECT r.registration_id, r.registration_number, c.city_code, c.city FROM registrations r INNER JOIN cities c ON r.city_id = c.city_id;`;
-            return await db.any(query, [selectedCity]);
+    //filter by city 
+    async function filterRegistrationsByCity(city) {
+        if (city) {
+            const query =`SELECT registration_number FROM registrations WHERE city_id = $1`
+            let selectedCity = await getCityID(city);
+            let filt = await db.any(query, [selectedCity.city_id]);
+            return(filt);
         } else {
             const allQuery = 'SELECT registration_number FROM registrations';
             return await db.any(allQuery);
         }
     }
-
-
-    // async function filterCity(city_code) {
-    //     try {
-    //         const filteredRegistrations = await db.any('SELECT registration.plate_number FROM registration JOIN city ON registration.city_id = city.city_id WHERE city_code = $1;', [city_code]);
-    //         return filteredRegistrations;
-    //     } catch (error) {
-    //         throw error;
-    //     }
-    // }
-    // async function filterCity(city_code) {
-    //     try {
-    //         const filteredRegistrations = await db.any('SELECT plate_number FROM registration JOIN city ON registration.city_id = city.city_id WHERE city_code = $1;', [city_code]);
-    //         return filteredRegistrations;
-    //     } catch (error) {
-    //         throw error;
-    //     }
-    // }
-
 
 
 
@@ -99,7 +73,7 @@ export default function db_queries(db) {
         insertIntoRegistrationPlateNumber,
         getAllRegistrations,
         filterRegistrationsByCity,
-        //filterCity,
+        getCityID,
         deleteRegistrations
     }
 

@@ -6,28 +6,52 @@
                 <h1>Registration Numbers</h1>
 
                 <div class="input">
+
+                    <!-- Flash message for clearing the database -->
+                    {{#if flash.clr}}
+                    <div class="alert alert-success">
+                        {{flash.clr}}
+                    </div>
+                    {{/if}}
                     <label for="number">Registration Number:</label>
                     <input type="text" name="number" placeholder="Please enter registration" required><br>
                 </div>
 
                 <button type="submit" class="addingButton" value="Add">Registration Add</button>
             </form>
+            <div>
+                <ul class="d-flex flex-wrap">
+                    {{#each numberPlate}}
+
+                    <li class="plates">{{this.registration_number}}</li>
+
+                    {{/each}}
+                </ul>
+            </div>
             <br>
-            <form action="/filter" method="post">
-                <label for="city">Select a city:</label>
-                <select id="city" name="city">
-                    <option value="">All Cities</option>
-                    <option value="CA">Cape Town</option>
-                    <option value="GP">Johannesburg</option>
-                    <option value="ND">Durban</option>
-                    <option value="L">Polokwane</option>
-                </select>
-                <button type="submit">Filter</button>
+            <form action="/filter" method="POST">
+                <div>
+                    <label for="city">Filter by City:</label>
+                    <select name="city" id="filterCity">
+                        <option value=""></option>
+                        <option value="">All</option>
+                        <option value="CA">Cape Town</option>
+                        <option value="CY">Bellville</option>
+                        <option value="ND">Durban</option>
+                        <option value="CJ">Paarl</option>
+                    </select>
+                </div>
+                <button type="submit" class="DisplayBtn" value="Display">Registration filter</button>
             </form>
 
-            <br>
+            <h2>Filtered Registrations</h2>
+            <ul>
+                {{#each filteredPlates}}
+                <li class="plates">{{this.registration_number}}</li>
+                {{/each}}
+            </ul>
 
-            <div>
+            <div class="d-flex flex-wrap">
                 <form action="/clear" method="POST">
                     <button type="submit">Clear Database</button>
                 </form>
@@ -38,31 +62,9 @@
     </div>
 
 
-    <div>
-        <ul class="d-flex flex-wrap">
-            {{#each numberPlate}}
-
-            <li class="plates">{{this.registration_number}}</li>
-
-            {{/each}}
-        </ul>
-    </div>
 
 
     <!-- Display filtered registrations -->
-    <h2>Filtered Registration Plates</h2>
-    <ul>
-        {{#each selectedCity}}
-        <li>{{this.registration_number}}</li>
-        {{/each}}
-    </ul>
-
-    <!-- Flash message for clearing the database -->
-    {{#if flash.clr}}
-    <div class="alert alert-success">
-        {{flash.clr}}
-    </div>
-    {{/if}}
 </body>
 
 </html>

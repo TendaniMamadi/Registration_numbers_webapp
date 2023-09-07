@@ -1,53 +1,104 @@
-* {
+/* Reset default styles */
+body, h1, p, ul, li, form, select, button {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
+/* Apply a background color and set font styles for the body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0; /* Set your preferred background color */
+}
+
+/* Center the container vertically and horizontally */
+.centerDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Style the container for the forms and list */
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Style the header and form labels */
 h1 {
+    font-size: 24px;
     text-align: center;
+    margin-bottom: 20px;
 }
 
-div {
-    margin-top: 20px;
+.label {
+    font-size: 18px;
+    margin-bottom: 5px;
 }
 
-.addingButton,.DisplayBtn {
-    padding: 3px 22px;
-    border-radius: 3px;
-    border: none;
-    background-color: rgb(11, 149, 149);
-    color: black;
-}
-
-a {
-    text-decoration: none;
-}
-
-
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
+/* Style the text input and select dropdown */
+input[type="text"],
 select {
-    height: 30px;
-    width: 250px;
-    text-align: center;
-    font-weight: bolder;
-  }
-
-
-.plates{
-    background-color: yellow;
-    color: black;
-    text-align: center;
-    border-radius: 5%;
-    height: 35px;
-    width: 150px;
-    margin: 10px;
-    border: solid black 3.5px;
-    text-decoration: none;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
+
+/* Style the buttons */
+button {
+    padding: 10px 20px;
+    background-color: #007bff; /* Set your preferred button color */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Add some spacing between form elements */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Style the list of registration plates */
+ul.d-flex {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Style individual plates */
+.plates {
+    background-color: #007bff;
+    text-align: center;
+    color: #fff;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+/* Change plate background on hover */
+.plates:hover {
+    background-color: #0056b3; /* Darker shade of your button color */
+}
+
+/* Style the flash message */
+.alert {
+    background-color: #28a745; /* Green color for success */
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+
 

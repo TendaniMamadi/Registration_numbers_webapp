@@ -4,25 +4,6 @@ export default function FrontEndLogic() {
     let clearMsg = "Database successfully cleared!";
     let city = "";
 
-
-    // function addCity(city_code, city) {
-    //     if (!city_code) {
-    //         return;
-    //     }
-
-    //     city_code = city_code.charAt(0).toUpperCase() + city_code.slice(1).toLowerCase();
-
-    //     if (city_name === "Cape Town") {
-    //         city_code = "CA";
-    //     } else if (city_name === "Polokwane") {
-    //         city_code = "L";
-    //     } else if (city_name === "Durban") {
-    //         city_code = "ND";
-    //     } else if (city_name === "Johannesburg") {
-    //         city_code = "GP";
-    //     }
-
-    // }
     function addCity(city_code, city) {
         if (!city_code) {
             return city_code; 
@@ -32,12 +13,12 @@ export default function FrontEndLogic() {
 
         if (city === "Cape Town") {
             city_code = "CA";
-        } else if (city === "Polokwane") {
-            city_code = "L";
+        } else if (city === "Paarl") {
+            city_code = "CJ";
         } else if (city === "Durban") {
             city_code = "ND";
-        } else if (city === "Johannesburg") {
-            city_code = "GP";
+        } else if (city === "Bellville") {
+            city_code = "CY";
         }
 
         return city_code; 

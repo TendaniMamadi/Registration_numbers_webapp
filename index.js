@@ -23,7 +23,7 @@ const pgp = pgPromise();
 const db = pgp(config);
 const app = express();
 const backendInstance = backend(db)
-const registrationInstance = registrationApp(backendInstance);
+//const registrationInstance = registrationApp(backendInstance);
 
 
 app.engine('handlebars', engine({
@@ -46,63 +46,26 @@ app.use(express.json());
 // Index route
 app.get('/', async (req, res) => {
     const numberPlate = await backendInstance.getAllRegistrations();
-   //console.log(numberPlate);
-    res.render('index',{numberPlate});
+    res.render('index', { numberPlate });
 });
 
 //Registration route (POST)
 app.post('/', async (req, res) => {
+
     // Access the submitted data using req.body
     const registrationNumber = req.body.number;
-    const filteredRegistrations = await backendInstance.filterRegistrationsByCity(registrationInstance.getCode(registrationNumber));
-    const filters = await backendInstance.insertIntoRegistrationPlateNumber(registrationNumber);
- 
-    
-    //console.log(filters);
-   
+    await backendInstance.insertIntoRegistrationPlateNumber(registrationNumber);
     res.redirect('/');
-    
+
 });
-// app.post('/', async (req, res) => {
-//     const registrationNumber = req.body.number;
-//     const code = registrationInstance.getCode(registrationNumber);
-
-//     // Assuming filterRegistrationsByCity returns an array of filtered registrations
-//     const filteredRegistrations = await backendInstance.filterRegistrationsByCity(code);
-
-//     // Insert each matching registration number individually
-//     for (const registration of filteredRegistrations) {
-//         await backendInstance.insertIntoRegistrationPlateNumber(registrationNumber, registration.id);
-//     }
-
-//     res.redirect('/');
-// });
-
 
 // Filter route (POST)
 app.post('/filter', async (req, res) => {
     const selectedCity = req.body.city;
-    const registration_number = req.body.registration_number;
-    const city_id = req.body.city_id;
-
-    const filteredPlates = await backendInstance.filterRegistrationsByCity(backendInstance.insertIntoRegistrationPlateNumber(registration_number,city_id));
-    res.render('index', {selectedCity});
-    console.log(selectedCity);
+    const filteredPlates = await backendInstance.filterRegistrationsByCity(selectedCity);
+    res.render('index', {filteredPlates});
+  
 });
-// app.post('/filter', async (req, res) => {
-//     const selectedCity = req.body.city;
-
-//     // Assuming addCity returns the code based on the selected city
-//     const code = registrationInstance.addCity(selectedCity);
-
-//     // Assuming filterCity returns filtered results based on the city code
-//     const cityFilter = await backendInstance.filterCity(code);
-
-//     console.log(cityFilter);
-//     res.render('index', { cityFilter });
-// });
-
-
 
 // Clear database route (POST)
 app.post('/clear', async (req, res) => {
@@ -113,7 +76,7 @@ app.post('/clear', async (req, res) => {
 
 
 
-const PORT = process.env.PORT || 3033;
+const PORT = process.env.PORT || 3034;
 app.listen(PORT, (req, res) => {
     console.log('We taking off on port:', PORT)
 });
