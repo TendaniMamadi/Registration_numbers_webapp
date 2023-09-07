@@ -15,12 +15,13 @@ export default function db_queries(db) {
     //     }
     // }
 
-    async function insertIntoRegistrationPlateNumber(plate_number, city_id) {
+    async function insertIntoRegistrationPlateNumber(registration_number,city_id) {
+    
         try {
             const result = await db.none(`
-                INSERT INTO registration (plate_number, city_id)
-                VALUES ($1, $2)
-            `, [plate_number, city_id]);
+                INSERT INTO registrations (registration_number,city_id)
+                VALUES ($1,$2)
+            `, [registration_number,city_id]);
 
             return result;
         } catch (error) {
@@ -29,9 +30,10 @@ export default function db_queries(db) {
     }
 
     //displays everything that has been inserted
+
     async function getAllRegistrations() {
         try {
-            const registrations = await db.any('SELECT plate_number FROM registration;');
+            const registrations = await db.any('SELECT registration_number FROM registrations;');
             return registrations;
 
         } catch (error) {
@@ -51,13 +53,14 @@ export default function db_queries(db) {
 
     //selects the city_id 
     async function filterRegistrationsByCity(selectedCity) {
-     if(selectedCity){
-        let query = 'SELECT plate_number FROM registration WHERE city_id IN (SELECT city_id From city WHERE city_code = $1)';
-        return await db.any(query,[selectedCity]);
-     }else{
-        let allQuery = 'SELECT plate_number FROM registration';
-        return await db.any(allQuery);
-     }
+        if (selectedCity) {
+            const query = `
+            SELECT r.registration_id, r.registration_number, c.city_code, c.city FROM registrations r INNER JOIN cities c ON r.city_id = c.city_id;`;
+            return await db.any(query, [selectedCity]);
+        } else {
+            const allQuery = 'SELECT registration_number FROM registrations';
+            return await db.any(allQuery);
+        }
     }
 
 
@@ -84,7 +87,7 @@ export default function db_queries(db) {
     //Remove the datafrom database
     async function deleteRegistrations() {
         try {
-            await db.none('DELETE FROM registration');
+            await db.none('DELETE FROM registrations');
         } catch (error) {
             throw error;
         }

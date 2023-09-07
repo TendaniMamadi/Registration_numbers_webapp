@@ -55,7 +55,9 @@ app.post('/', async (req, res) => {
     // Access the submitted data using req.body
     const registrationNumber = req.body.number;
     const filteredRegistrations = await backendInstance.filterRegistrationsByCity(registrationInstance.getCode(registrationNumber));
-    const filters = await backendInstance.insertIntoRegistrationPlateNumber(registrationNumber,filteredRegistrations.id);
+    const filters = await backendInstance.insertIntoRegistrationPlateNumber(registrationNumber);
+ 
+    
     //console.log(filters);
    
     res.redirect('/');
@@ -80,9 +82,12 @@ app.post('/', async (req, res) => {
 // Filter route (POST)
 app.post('/filter', async (req, res) => {
     const selectedCity = req.body.city;
-    const cityFilter = await backendInstance.filterRegistrationsByCity(selectedCity);
+    const registration_number = req.body.registration_number;
+    const city_id = req.body.city_id;
+
+    const filteredPlates = await backendInstance.filterRegistrationsByCity(backendInstance.insertIntoRegistrationPlateNumber(registration_number,city_id));
+    res.render('index', {selectedCity});
     console.log(selectedCity);
-    res.render('index', {cityFilter});
 });
 // app.post('/filter', async (req, res) => {
 //     const selectedCity = req.body.city;

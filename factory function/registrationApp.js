@@ -2,10 +2,10 @@ export default function FrontEndLogic() {
 
     let registration = [];
     let clearMsg = "Database successfully cleared!";
-    let city_name = "";
+    let city = "";
 
 
-    // function addCity(city_code, city_name) {
+    // function addCity(city_code, city) {
     //     if (!city_code) {
     //         return;
     //     }
@@ -23,30 +23,30 @@ export default function FrontEndLogic() {
     //     }
 
     // }
-    function addCity(city_code, city_name) {
+    function addCity(city_code, city) {
         if (!city_code) {
-            return city_code; // Return the original code if provided
+            return city_code; 
         }
-    
+
         city_code = city_code.charAt(0).toUpperCase() + city_code.slice(1).toLowerCase();
-    
-        if (city_name === "Cape Town") {
+
+        if (city === "Cape Town") {
             city_code = "CA";
-        } else if (city_name === "Polokwane") {
+        } else if (city === "Polokwane") {
             city_code = "L";
-        } else if (city_name === "Durban") {
+        } else if (city === "Durban") {
             city_code = "ND";
-        } else if (city_name === "Johannesburg") {
+        } else if (city === "Johannesburg") {
             city_code = "GP";
         }
-    
-        return city_code; // Return the calculated or mapped city code
+
+        return city_code; 
     }
-    
 
 
-    function setRegistration(plate_number) {
-        registration = plate_number
+
+    function setRegistration(registration_number) {
+        registration = registration_number
     };
 
 
@@ -57,21 +57,27 @@ export default function FrontEndLogic() {
 
     function setCity(city) {
 
-        city_name = city
+        city = city
 
     }
 
     function getCity() {
-        return city_name
+        return city
     }
 
     function getCityCode() {
         return city_code
     }
 
-    function getCode(registration){
-        return registration.substring(0,2);
+    function getCode(registration) {
+        if (registration && typeof registration === 'string' && registration.length >= 2) {
+            return registration.substring(0, 2);
+        } else {
+            
+            return 'too short'; 
+        }
     }
+
 
     function registrationAdded() {
 

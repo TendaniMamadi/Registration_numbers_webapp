@@ -13,20 +13,18 @@
                 <button type="submit" class="addingButton" value="Add">Registration Add</button>
             </form>
             <br>
-            <form action="/filter" method="POST">
-                <div>
-                    <label for="city">Filter by City:</label>
-                    <select name="city" id="filterCity">
-                        <option value=""></option>
-                        <option value="">All</option>
-                        <option value="1">Cape Town</option>
-                        <option value="4">Johannesburg</option>
-                        <option value="3">Durban</option>
-                        <option value="2">Polokwane</option>
-                    </select>
-                </div>
-                <button type="submit" class="DisplayBtn" value="Display">Registration filter</button>
+            <form action="/filter" method="post">
+                <label for="city">Select a city:</label>
+                <select id="city" name="city">
+                    <option value="">All Cities</option>
+                    <option value="CA">Cape Town</option>
+                    <option value="GP">Johannesburg</option>
+                    <option value="ND">Durban</option>
+                    <option value="L">Polokwane</option>
+                </select>
+                <button type="submit">Filter</button>
             </form>
+
             <br>
 
             <div>
@@ -40,11 +38,11 @@
     </div>
 
 
-    <div >
-        <ul class="d-flex flex-wrap" >
+    <div>
+        <ul class="d-flex flex-wrap">
             {{#each numberPlate}}
 
-            <li class="plates">{{this.plate_number}}</li>
+            <li class="plates">{{this.registration_number}}</li>
 
             {{/each}}
         </ul>
@@ -52,10 +50,10 @@
 
 
     <!-- Display filtered registrations -->
-    <h2>Filtered Registrations</h2>
+    <h2>Filtered Registration Plates</h2>
     <ul>
-        {{#each cityFilter}}
-        <li class="plates">{{this.cityFilter}}</li>
+        {{#each selectedCity}}
+        <li>{{this.registration_number}}</li>
         {{/each}}
     </ul>
 

@@ -1,20 +1,13 @@
 -- City table
-CREATE TABLE city (
-    city_id SERIAL PRIMARY KEY,
-    city_code VARCHAR(2) NOT NULL,
-    city_name VARCHAR(50) NOT NULL
+CREATE TABLE cities (
+    city_id serial PRIMARY KEY, 
+    city_code VARCHAR(255),
+    city VARCHAR(255) UNIQUE
 );
 
 -- Registration table
-CREATE TABLE registration (
-    registration_id SERIAL PRIMARY KEY,
-    plate_number VARCHAR(20) NOT NULL,
-    city_id INT REFERENCES city(city_id)
+CREATE TABLE registrations(
+    registration_id serial PRIMARY KEY,
+    registration_number VARCHAR(255),
+    city_id INT REFERENCES cities(city_id)
 );
-
-
-INSERT INTO city (city_code, city_name) VALUES
-  ('CA', 'Cape Town'),
-  ('L', 'Polokwane'),
-  ('ND', 'Durban'),
-  ('GP', 'Johannesburg');
