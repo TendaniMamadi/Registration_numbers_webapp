@@ -23,7 +23,8 @@ const pgp = pgPromise();
 const db = pgp(config);
 const app = express();
 const backendInstance = backend(db)
-//const registrationInstance = registrationApp(backendInstance);
+const registrationInstance = registrationApp(backendInstance);
+const routeInstance = (registrationInstance,backendInstance);
 
 
 app.engine('handlebars', engine({
@@ -54,7 +55,9 @@ app.post('/', async (req, res) => {
 
     // Access the submitted data using req.body
     const registrationNumber = req.body.number;
+    const select = req.body.city;
     await backendInstance.insertIntoRegistrationPlateNumber(registrationNumber);
+    req.flash('alrt',registrationInstance.errorMessage(registrationNumber));
     res.redirect('/');
 
 });

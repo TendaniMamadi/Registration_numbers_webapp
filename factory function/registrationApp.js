@@ -1,12 +1,18 @@
 export default function FrontEndLogic() {
-
     let registration = [];
     let clearMsg = "Database successfully cleared!";
     let city = "";
 
+
+    // async function validateRegistration(registrationNumber) {
+    //     let regEx = /^(CA|CJ|ND|CY)\s?\d{1,3}\s?\d{1,3}$/i
+    //     let regCheck = regEx.test(registrationNumber);
+    //     return regCheck;
+    // }
+
     function addCity(city_code, city) {
         if (!city_code) {
-            return city_code; 
+            return city_code;
         }
 
         city_code = city_code.charAt(0).toUpperCase() + city_code.slice(1).toLowerCase();
@@ -21,70 +27,68 @@ export default function FrontEndLogic() {
             city_code = "CY";
         }
 
-        return city_code; 
+        return city_code;
+    }
+
+    function errorMessage(input) {
+
+        let errorMsg = ""
+        let regEx = /^(CA|CJ|ND|CY)\s?\d{1,3}\s?\d{1,3}$/i;
+
+        if (!regEx.test(input)) {
+
+            errorMsg = "Please enter valid registration";
+
+        }
+
+        return errorMsg
     }
 
 
 
     function setRegistration(registration_number) {
-        registration = registration_number
-    };
-
+        registration = registration_number;
+    }
 
     function getRegistration() {
-        return registration
-    };
+        return registration;
+    }
 
-
-    function setCity(city) {
-
-        city = city
-
+    function setCity(selectedCity) {
+        city = selectedCity;
     }
 
     function getCity() {
-        return city
-    }
-
-    function getCityCode() {
-        return city_code
+        return city;
     }
 
     function getCode(registration) {
         if (registration && typeof registration === 'string' && registration.length >= 2) {
             return registration.substring(0, 2);
         } else {
-            
-            return 'too short'; 
+            return 'too short';
         }
     }
 
-
     function registrationAdded() {
-
-        return registration.length
-
+        return registration.length;
     }
 
     function clearButton() {
-        registration.length = 0
+        registration.length = 0;
     }
 
     function getClearButton() {
-        return registration.length
+        return registration.length;
     }
 
-
-    function setClearMsg() {
-        clearMsg = "Successfully cleared!"
+    function setClearMsg(msg) {
+        clearMsg = msg;
     }
 
     async function getClearMsg() {
-        return clearMsg
+        return clearMsg;
     }
-
-
-
 
     return {
         addCity,
@@ -92,16 +96,13 @@ export default function FrontEndLogic() {
         getRegistration,
         setCity,
         getCity,
-        getCityCode,
-        //  errorMessage,
         getCode,
         registrationAdded,
         clearButton,
         getClearButton,
         setClearMsg,
-        getClearMsg
-
-    }
-
+        getClearMsg,
+        errorMessage,
+    
+    };
 }
-

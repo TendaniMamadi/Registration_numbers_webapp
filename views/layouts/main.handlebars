@@ -17,4 +17,35 @@
     </div>
 </body>
 
+<script>
+    const message = document.querySelector('.error');
+
+    const grt = document.querySelector('.greet');
+
+    const alrt = document.querySelector('.alert');
+
+    if (message.innerText !== "") {
+        setTimeout(function () {
+            message.innerText = '';
+        }, 3000);
+
+    } else if (grt.innerText !== "") {
+        setTimeout(function () {
+            grt.innerText = '';
+        }, 3000);
+
+
+    } else if (alrt.innerText !== "") {
+        setTimeout(function () {
+            alrt.innerText = '';
+        }, 3000);
+
+
+    }
+
+
+
+
+</script>
+
 </html>

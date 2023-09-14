@@ -7,14 +7,14 @@
 
                 <div class="input">
 
-                    <!-- Flash message for clearing the database -->
-                    {{#if flash.clr}}
-                    <div class="alert alert-success">
-                        {{flash.clr}}
-                    </div>
-                    {{/if}}
                     <label for="number">Registration Number:</label>
                     <input type="text" name="number" placeholder="Please enter registration" required><br>
+                    <!-- Flash message for invalid -->
+                    <div class="alert alert-success">
+                        {{#if messages.alrt}}
+                        <p class="messages">{{messages.alrt}}</p>
+                        {{/if}}
+                    </div>
                 </div>
 
                 <button type="submit" class="addingButton" value="Add">Registration Add</button>
@@ -32,7 +32,7 @@
             <form action="/filter" method="POST">
                 <div>
                     <label for="city">Filter by City:</label>
-                    <select name="city" id="filterCity">
+                    <select name="city" id="filterCity" required>
                         <option value=""></option>
                         <option value="">All</option>
                         <option value="CA">Cape Town</option>
@@ -41,16 +41,19 @@
                         <option value="CJ">Paarl</option>
                     </select>
                 </div>
+                <br>
                 <button type="submit" class="DisplayBtn" value="Display">Registration filter</button>
             </form>
 
+            <!-- Display filtered registrations -->
             <h2>Filtered Registrations</h2>
-            <ul>
+            <ul class="d-flex flex-wrap">
                 {{#each filteredPlates}}
                 <li class="plates">{{this.registration_number}}</li>
                 {{/each}}
             </ul>
 
+            <!-- Flash message for clearing the database -->
             <div class="d-flex flex-wrap">
                 <form action="/clear" method="POST">
                     <button type="submit">Clear Database</button>
@@ -64,7 +67,6 @@
 
 
 
-    <!-- Display filtered registrations -->
 </body>
 
 </html>

@@ -2,20 +2,23 @@
 body, h1, p, ul, li, form, select, button {
     margin: 0;
     padding: 0;
+ 
 }
 
 /* Apply a background color and set font styles for the body */
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0; /* Set your preferred background color */
+    height: 100vh;
 }
+
 
 /* Center the container vertically and horizontally */
 .centerDiv {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    /* height: 100vh; */
 }
 
 /* Style the container for the forms and list */
@@ -92,7 +95,7 @@ ul.d-flex {
 
 /* Style the flash message */
 .alert {
-    background-color: #28a745; /* Green color for success */
+    background-color: red; /* Green color for success */
     color: #fff;
     padding: 10px;
     border-radius: 5px;
