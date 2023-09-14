@@ -1,9 +1,10 @@
 import assert from 'assert'
 import db_queries from '../database/db_queries.js';
 import pgPromise from 'pg-promise';
+import 'dotenv/config';
 
 const pgp = pgPromise();
-const DATABASE_URL = process.env.DATABASE_URL || 'postgres://vlciqtnc:bSO8NB8PbLYnE4QiLBeWH80GuUXwVwQD@trumpet.db.elephantsql.com/vlciqtnc?ssl=true'
+const DATABASE_URL = process.env.DATABASE_URL_TEST
 
 const config = {
     connectionString: DATABASE_URL
