@@ -3,9 +3,10 @@ import { engine } from 'express-handlebars';
 import bodyParser from 'body-parser';
 import flash from 'express-flash';
 import session from 'express-session';
+import db_Queries from './database/db_queries.js';
 import registrationApp from './factory function/registrationApp.js';
 import pgPromise from 'pg-promise';
-import backend from './database/db_queries.js'
+
 
 
 const DATABASE_URL = process.env.DATABASE_URL || 'postgres://vlciqtnc:bSO8NB8PbLYnE4QiLBeWH80GuUXwVwQD@trumpet.db.elephantsql.com/vlciqtnc?ssl=true'
@@ -22,7 +23,7 @@ if (process.env.NODE_ENV == 'production') {
 const pgp = pgPromise();
 const db = pgp(config);
 const app = express();
-const backendInstance = backend(db)
+const backendInstance = db_Queries(db)
 const registrationInstance = registrationApp(backendInstance);
 const routeInstance = (registrationInstance,backendInstance);
 
@@ -57,7 +58,6 @@ app.post('/', async (req, res) => {
     const registrationNumber = req.body.number;
     const select = req.body.city;
     await backendInstance.insertIntoRegistrationPlateNumber(registrationNumber);
-    req.flash('alrt',registrationInstance.errorMessage(registrationNumber));
     res.redirect('/');
 
 });
@@ -73,7 +73,7 @@ app.post('/filter', async (req, res) => {
 // Clear database route (POST)
 app.post('/clear', async (req, res) => {
     await backendInstance.deleteRegistrations();
-    req.flash('clr', 'All registrations have been deleted.');
+    req.flash('alrt','Database successfully cleared!');
     res.redirect('/');
 });
 

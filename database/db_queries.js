@@ -3,7 +3,7 @@ export default function db_queries(db) {
     async function getCityID(registration_number) {
         try {
             let firstTwoLettersOfTheRegNumber = registration_number.substring(0, 2);
-            const result = await db.oneOrNone(`SELECT city_id FROM cities WHERE city_code = $1`, [firstTwoLettersOfTheRegNumber])
+            const result = await db.any(`SELECT city_id FROM cities WHERE city_code = $1`, [firstTwoLettersOfTheRegNumber])
             if (result != null) {
 
                 return result;

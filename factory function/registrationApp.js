@@ -3,13 +3,6 @@ export default function FrontEndLogic() {
     let clearMsg = "Database successfully cleared!";
     let city = "";
 
-
-    // async function validateRegistration(registrationNumber) {
-    //     let regEx = /^(CA|CJ|ND|CY)\s?\d{1,3}\s?\d{1,3}$/i
-    //     let regCheck = regEx.test(registrationNumber);
-    //     return regCheck;
-    // }
-
     function addCity(city_code, city) {
         if (!city_code) {
             return city_code;
@@ -37,11 +30,11 @@ export default function FrontEndLogic() {
 
         if (!regEx.test(input)) {
 
-            errorMsg = "Please enter valid registration";
+            errorMsg = "Enter valid registration.";
 
-        }
-
+        } 
         return errorMsg
+
     }
 
 
@@ -82,8 +75,8 @@ export default function FrontEndLogic() {
         return registration.length;
     }
 
-    function setClearMsg(msg) {
-        clearMsg = msg;
+    function setClearMsg() {
+        clearMsg = "Database successfully cleared!";
     }
 
     async function getClearMsg() {
@@ -103,6 +96,5 @@ export default function FrontEndLogic() {
         setClearMsg,
         getClearMsg,
         errorMessage,
-    
     };
 }
