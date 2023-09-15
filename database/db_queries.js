@@ -50,7 +50,8 @@ export default function db_queries(db) {
             
 
         } catch (error) {
-            throw new Error('Error getting registrations: ' + error.message);
+            // throw new Error('Error getting registrations: ' + error.message);
+            next(error)
         }
 
         return registrations;
