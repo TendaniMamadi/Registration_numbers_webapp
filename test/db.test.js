@@ -4,10 +4,10 @@ import pgPromise from 'pg-promise';
 import 'dotenv/config';
 
 const pgp = pgPromise();
-const DATABASE_URL = process.env.DATABASE_URL_TEST
+const DATABASE_URL_TEST = process.env.DATABASE_URL_TEST
 
 const config = {
-    connectionString: DATABASE_URL
+    connectionString: DATABASE_URL_TEST
 }
 
 if (process.env.NODE_ENV == 'production') {
@@ -33,30 +33,44 @@ describe('db_queries Module', function () {
     });
 
 
+    it('should be able add registration number to database', async function () {
+        // Insert a registration plate into the database
+        await dbQueries.insertIntoRegistrationPlateNumber('CA 230303');
+        await dbQueries.insertIntoRegistrationPlateNumber('CA 123 123');
+        await dbQueries.insertIntoRegistrationPlateNumber('CY230303');
+        const registrations = await dbQueries.getAllRegistrations();
+       
+
+        assert.deepEqual([{registration_number: 'CY230303'}],registrations );
+
+    });
+
     it('should be able to catch duplicates', async function () {
         // Insert a registration plate into the database
         await dbQueries.insertIntoRegistrationPlateNumber('CA 230303');
-    
+
         // Attempt to insert the same registration plate, which should fail
         try {
             await dbQueries.insertIntoRegistrationPlateNumber('CA 230303');
             assert.fail('Registration number already exist.');
         } catch (error) {
-            assert.deepEqual(error.message, 'Registration number already exist.');
+            assert.strictEqual(error.message, 'Registration number already exist.');
         }
     });
-    
+
 
     it('should retrieve filtered city', async function () {
         // Insert registration plates into the database
-        await dbQueries.insertIntoRegistrationPlateNumber('CA 230303');
-        await dbQueries.insertIntoRegistrationPlateNumber('CY 230303');
-    
+      //  console.log(await dbQueries.insertIntoRegistrationPlateNumber('CA 230303'));
+       // console.log(await dbQueries.insertIntoRegistrationPlateNumber('CY 230303'));
+
         // Retrieve registrations for a specific city
-        const registrations = await dbQueries.getCityID('CY');
-        assert.deepEqual(registrations.length, 1);
+        const registrations = await dbQueries.filterRegistrationsByCity("CA");
+        assert.strictEqual(1, registrations.length,);
+
     });
-    
+
+
 
     it('should send error messages', async function () {
         // Attempt to insert an invalid registration plate
@@ -64,25 +78,25 @@ describe('db_queries Module', function () {
             await dbQueries.insertIntoRegistrationPlateNumber('BT 32 XN GP');
             assert.fail('Enter valid registration.');
         } catch (error) {
-            assert.deepEqual(error.message, 'Enter valid registration.');
+            assert.strictEqual(error.message, 'Enter valid registration.');
         }
     });
-    
+
 
 
     it('should clear the database', async function () {
         // Insert registration plates into the database
         await dbQueries.insertIntoRegistrationPlateNumber('CY 230303');
         await dbQueries.insertIntoRegistrationPlateNumber('CY 123456');
-    
+
         // Clear the database
         await dbQueries.deleteRegistrations();
-    
+
         // Verify that the database is empty
         const registrations = await dbQueries.getAllRegistrations();
         assert.deepEqual(registrations.length, 0);
     });
-    
+
     after(function () {
         db.$pool.end
     })

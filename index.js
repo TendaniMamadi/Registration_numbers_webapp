@@ -54,7 +54,7 @@ app.post('/', async (req, res) => {
 
     // Access the submitted data using req.body
     const registrationNumber = req.body.number;
-    const select = req.body.city;
+  //  const select = req.body.city;
     await backendInstance.insertIntoRegistrationPlateNumber(registrationNumber);
     res.redirect('/');
 

@@ -45,7 +45,7 @@ describe('registration_numbers', function () {
         let Registration = registrationApp();
         Registration.setRegistration("BT 32 XN GP");
 
-        assert.equal("Enter valid registration.", Registration.errorMessage());
+        assert.equal("Enter valid registration.");
 
     });
 

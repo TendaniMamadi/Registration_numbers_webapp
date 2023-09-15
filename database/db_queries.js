@@ -3,7 +3,7 @@ export default function db_queries(db) {
     async function getCityID(registration_number) {
         try {
             let firstTwoLettersOfTheRegNumber = registration_number.substring(0, 2);
-            const result = await db.any(`SELECT city_id FROM cities WHERE city_code = $1`, [firstTwoLettersOfTheRegNumber])
+            const result = await db.oneOrNone(`SELECT city_id FROM cities WHERE city_code = $1`, [firstTwoLettersOfTheRegNumber])
             if (result != null) {
 
                 return result;
@@ -18,7 +18,10 @@ export default function db_queries(db) {
 
     async function insertIntoRegistrationPlateNumber(registration_number) {
         // Define the updated regex pattern here
-        let regEx = /^(CA|CJ|ND|CY)\s?\d{1,3}\s?\d{1,3}$/i;
+        //valid formats: CA123123
+        //
+        let regEx = /^(?!.*(\bCA\b|\bCJ\b|\bND\b|\bCY\b).*\s?\d{1,3}\s?\d{1,3}$).*$/i
+        ;
         
         // Check if the registration_number matches the regex pattern
         if (regEx.test(registration_number)) {
@@ -56,7 +59,9 @@ export default function db_queries(db) {
         if (city) {
             const query = `SELECT registration_number FROM registrations WHERE city_id = $1`
             let selectedCity = await getCityID(city);
+            console.log([selectedCity.city_id]);
             let filt = await db.any(query, [selectedCity.city_id]);
+            console.log(filt);
             return (filt);
         } else {
             const allQuery = 'SELECT registration_number FROM registrations';
