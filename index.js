@@ -7,20 +7,23 @@ import db_Queries from './database/db_queries.js';
 import registrationApp from './factory function/registrationApp.js';
 import pgPromise from 'pg-promise';
 import 'dotenv/config';
-const DATABASE_URL = process.env.DATABASE_URL
 
-const config = {
-    connectionString: DATABASE_URL
-}
-
-if (process.env.NODE_ENV == 'production') {
-    config.ssl = {
-        rejectUnauthorized: false
-    }
-}
-const pgp = pgPromise();
-const db = pgp(config);
 const app = express();
+
+
+const connectionString = process.env.DATABASE_URL
+
+// const config = {
+//     connectionString: DATABASE_URL
+// }
+
+// if (process.env.NODE_ENV == 'production') {
+//     config.ssl = {
+//         rejectUnauthorized: false
+//     }
+// }
+const pgp = pgPromise({});
+const db = pgp(connectionString);
 const backendInstance = db_Queries(db)
 const registrationInstance = registrationApp(backendInstance);
 const routeInstance = (registrationInstance,backendInstance);

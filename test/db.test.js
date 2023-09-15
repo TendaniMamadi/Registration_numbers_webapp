@@ -3,19 +3,19 @@ import db_queries from '../database/db_queries.js';
 import pgPromise from 'pg-promise';
 import 'dotenv/config';
 
-const pgp = pgPromise();
-const DATABASE_URL_TEST = process.env.DATABASE_URL_TEST
+const pgp = pgPromise({});
+const connectionString = process.env.DATABASE_URL_TEST
 
-const config = {
-    connectionString: DATABASE_URL_TEST
-}
+// const config = {
+//     connectionString: DATABASE_URL_TEST
+// }
 
-if (process.env.NODE_ENV == 'production') {
-    config.ssl = {
-        rejectUnauthorized: false
-    }
-}
-const db = pgp(config);
+// if (process.env.NODE_ENV == 'production') {
+//     config.ssl = {
+//         rejectUnauthorized: false
+//     }
+// }
+const db = pgp(connectionString);
 
 //test cases
 describe('db_queries Module', function () {
