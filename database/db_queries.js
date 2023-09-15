@@ -20,7 +20,7 @@ export default function db_queries(db) {
         // Define the updated regex pattern here
         //valid formats: CA123123
         //
-        let regEx = /^(CA|CL|CK|CJ|CF)\s?\d{1,3}\s?\d{1,3}$/i
+        let regEx = /^(CA|CJ|ND|CY)\s?\d{1,3}\s?\d{1,3}$/i
         ;
         
         // Check if the registration_number matches the regex pattern
