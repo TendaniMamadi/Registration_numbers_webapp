@@ -36,11 +36,11 @@ describe('db_queries Module', function () {
     it('should be able add registration number to database', async function () {
         // Insert a registration plate into the database
     
-        await dbQueries.insertIntoRegistrationPlateNumber('CY 230303');
+        await dbQueries.insertIntoRegistrationPlateNumber('CA 242424');
         const registrations = await dbQueries.getAllRegistrations();
        
 
-        assert.equal([{registration_number: 'CY 230303'}],registrations );
+        assert.deepEqual([{registration_number: 'CA 242424'}],registrations );
 
     });
 
