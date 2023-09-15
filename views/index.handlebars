@@ -10,9 +10,13 @@
                     <label for="number">Registration Number:</label>
                     <input type="text" name="number" placeholder="Please enter registration" required><br>
                     <!-- Flash message for invalid -->
-                    <div class="alert alert-success">
+                    <div class="alert alert-success invalid">
                         {{#if messages.alrt}}
-                        <p class="messages">{{messages.alrt}}</p>
+                        <p class="messages" style="color: green;">{{messages.alrt}}</p>
+                        {{/if}}
+
+                        {{#if messages.invalid}}
+                        <p class="messages" style="color: red;">{{messages.invalid}}</p>
                         {{/if}}
                     </div>
                 </div>

@@ -20,8 +20,16 @@
 <script>
 
     const alrt = document.querySelector('.alert');
+    const invalid = document.querySelector('.invalid');
 
     if (alrt.innerText !== "") {
+        setTimeout(function () {
+            alrt.innerText = '';
+        }, 3000);
+
+    }
+
+    if (invalid.innerText !== "") {
         setTimeout(function () {
             alrt.innerText = '';
         }, 3000);

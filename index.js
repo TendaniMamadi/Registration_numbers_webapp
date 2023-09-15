@@ -59,6 +59,7 @@ app.post('/', async (req, res) => {
     const registrationNumber = req.body.number;
   //  const select = req.body.city;
     await backendInstance.insertIntoRegistrationPlateNumber(registrationNumber);
+    req.flash('invalid','Invalid registration number format');
     res.redirect('/');
 
 });
