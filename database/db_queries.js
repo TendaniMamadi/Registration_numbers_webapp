@@ -20,7 +20,7 @@ export default function db_queries(db) {
         // Define the updated regex pattern here
         //valid formats: CA123123
         //
-        let regEx = /^(?!.*(\bCA\b|\bCJ\b|\bND\b|\bCY\b).*\s?\d{1,3}\s?\d{1,3}$).*$/i
+        let regEx = /^(CA|CL|CK|CJ|CF)\s?\d{1,3}\s?\d{1,3}$/i
         ;
         
         // Check if the registration_number matches the regex pattern
@@ -43,13 +43,17 @@ export default function db_queries(db) {
     //displays everything that has been inserted
 
     async function getAllRegistrations() {
+        let registrations;
+
         try {
-            const registrations = await db.any('SELECT registration_number FROM registrations;');
-            return registrations;
+            registrations = await db.any('SELECT registration_number FROM registrations');
+            
 
         } catch (error) {
             throw new Error('Error getting registrations: ' + error.message);
         }
+
+        return registrations;
     }
 
 
@@ -59,9 +63,9 @@ export default function db_queries(db) {
         if (city) {
             const query = `SELECT registration_number FROM registrations WHERE city_id = $1`
             let selectedCity = await getCityID(city);
-            console.log([selectedCity.city_id]);
+           
             let filt = await db.any(query, [selectedCity.city_id]);
-            console.log(filt);
+         
             return (filt);
         } else {
             const allQuery = 'SELECT registration_number FROM registrations';
