@@ -46,12 +46,11 @@ export default function db_queries(db) {
         let registrations;
 
         try {
-            registrations = await db.any('SELECT registration_number FROM registrations');
+            registrations = await db.manyOrNone('SELECT registration_number FROM registrations');
             
 
         } catch (error) {
-            // throw new Error('Error getting registrations: ' + error.message);
-            next(error)
+            throw error
         }
 
         return registrations;
