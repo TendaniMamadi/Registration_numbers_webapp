@@ -8,11 +8,15 @@
                 <div class="input">
 
                     <label for="number">Registration Number:</label>
-                    <input type="text" name="number" placeholder="Please enter registration" required><br>
+                    <input type="text" name="number" spellcheck="true" maxlength="10" placeholder="Please enter registration" required><br>
                     <!-- Flash message for invalid -->
                     <div class="alert alert-success invalid">
                         {{#if messages.alrt}}
                         <p class="messages" style="color: green;">{{messages.alrt}}</p>
+                        {{/if}}
+
+                         {{#if messages.valid}}
+                        <p class="messages" style="color: green;">{{messages.valid}}</p>
                         {{/if}}
 
                         {{#if messages.invalid}}

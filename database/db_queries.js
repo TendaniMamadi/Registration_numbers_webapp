@@ -16,44 +16,73 @@ export default function db_queries(db) {
 
     }
 
+
     async function insertIntoRegistrationPlateNumber(registration_number) {
-
         //valid formats: CA123123
-        // Convert the entered registration number to lowercase for case insensitivity
-        let normalizedInput = registration_number.toLowerCase();
-        // Check if the normalized input exists in the array of registration numbers
-        if (registration_number.includes(normalizedInput)) {
-            // If it exists, send an error message
-            return "reg number already exists";
-        } else {
 
-                //if above condition is false, insert registration
+        let regEx = /^(CA|CJ|ND|CY)\s?\d{1,3}\s?\d{1,3}$/i;
 
-
-            //
-            let regEx = /^(CA|CJ|ND|CY)\s?\d{1,3}\s?\d{1,3}$/i
-                ;
-
-            // Check if the registration_number matches the regex pattern
-            if (regEx.test(registration_number)) {
-                try {
-                    let city_id = await getCityID(registration_number);
-                    if (city_id) {
-                        await db.none(`INSERT INTO registrations (registration_number, city_id) VALUES ($1, $2)`, [registration_number, city_id.city_id]);
-                    }
-                } catch (error) {
-                    throw new Error('Error inserting registration: ' + error.message);
+        // Check if the registration_number matches the regex pattern
+        if (regEx.test(registration_number)) {
+            try {
+                let city_id = await getCityID(registration_number);
+                if (city_id) {
+                    await db.none(`INSERT INTO registrations (registration_number, city_id) VALUES ($1, $2)`, [registration_number, city_id.city_id]);
                 }
-            } else {
-                // Handle the case where the registration_number doesn't match the regex pattern
-                let message = "Invalid registration number format"
-                return message
+            } catch (error) {
+                throw new Error('Error inserting registration: ' + error.message);
             }
+        } else {
+            // Handle the case where the registration_number doesn't match the regex pattern
+            let message = "Invalid registration number format"
+            return message
         }
     }
 
-    //displays everything that has been inserted
 
+    // Function to check for duplicates in the database
+    async function checkForDuplicateRegistration(registration_number) {
+        try {
+            // Use INSERT query with ON CONFLICT
+            const query = `
+                INSERT INTO registrations (registration_number)
+                VALUES ($1)
+                ON CONFLICT (registration_number) DO NOTHING;`;
+
+            await pool.query(query, [registration_number]);
+            return 'Registration number added successfully';
+        } catch (error) {
+            throw new Error('Error inserting registration number: ' + error.message);
+        }
+    }
+
+
+
+
+    // async function checkForDuplicateRegistration(registration_number) {
+    //     try {
+    //         // Query the database to check if the registration number already exists
+    //         const query = 'SELECT COUNT(*) FROM registrations WHERE registration_number = $1';
+    //         const result = await db.query(query, [registration_number]);
+
+    //         // If the count is greater than 0, the registration_number is a duplicate
+    //         const isDuplicate = result.rows[0].count > 0;
+
+    //         if (isDuplicate) {
+    //             return 'Registration number already exists';
+    //         } else {
+    //             // Insert the registration number into the database
+    //             const insertQuery = 'INSERT INTO registrations (registration_number) VALUES ($1)';
+    //             await db.query(insertQuery, [registration_number]);
+    //             return 'Registration number added successfully';
+    //         }
+    //     } catch (error) {
+    //         throw new Error('Error checking for duplicate registration: ' + error.message);
+    //     }
+    // }
+
+
+    //displays everything that has been inserted
     async function getAllRegistrations() {
         let registrations;
 
@@ -67,7 +96,6 @@ export default function db_queries(db) {
 
         return registrations;
     }
-
 
 
     //filter by city 
@@ -85,27 +113,6 @@ export default function db_queries(db) {
         }
     }
 
-    //functions that picks up duplication of data
-
-    // function avoidDuplications(registration_number) {
-    //     // // Convert the entered registration number to lowercase for case insensitivity
-    //     // let normalizedInput = registration_number.toLowerCase();
-
-
-
-    //     if (registration_number) {
-    //         // Check if the normalized input exists in the array of registration numbers
-    //         if (registration_number.includes(normalizedInput)) {
-    //             // If it exists, send an error message
-    //             return "reg number already exists";
-    //         }
-    //     }
-
-    //     // If no duplicate is detected, add registration.
-
-    // }
-
-
 
     //Remove the datafrom database
     async function deleteRegistrations() {
@@ -117,14 +124,13 @@ export default function db_queries(db) {
     }
 
 
-
     return {
         insertIntoRegistrationPlateNumber,
         getAllRegistrations,
         filterRegistrationsByCity,
         getCityID,
         deleteRegistrations,
-        // avoidDuplications
+        checkForDuplicateRegistration
     }
 
 }

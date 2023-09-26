@@ -10,6 +10,7 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0; /* Set your preferred background color */
     height: 100vh;
+    overflow: hidden;
 }
 
 
@@ -18,7 +19,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* height: 100vh; */
+    height: 100vh;
 }
 
 /* Style the container for the forms and list */
@@ -96,7 +97,7 @@ ul.d-flex {
 
 /* Style the flash message */
 .alert {
-    background-color: red; /* Green color for success */
+    background-color: red; 
     color: #fff;
     padding: 10px;
     border-radius: 5px;

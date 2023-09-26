@@ -3,30 +3,17 @@ import { engine } from 'express-handlebars';
 import bodyParser from 'body-parser';
 import flash from 'express-flash';
 import session from 'express-session';
-import db_Queries from './database/db_queries.js';
-import registrationApp from './factory function/registrationApp.js';
+import db_queries from './database/db_queries.js';
 import pgPromise from 'pg-promise';
 import 'dotenv/config';
+import routes from './routes/routes.js';
 
 const app = express();
-
-
 const connectionString = process.env.DATABASE_URL
-
-// const config = {
-//     connectionString: DATABASE_URL
-// }
-
-// if (process.env.NODE_ENV == 'production') {
-//     config.ssl = {
-//         rejectUnauthorized: false
-//     }
-// }
 const pgp = pgPromise({});
 const db = pgp(connectionString);
-const backendInstance = db_Queries(db)
-const registrationInstance = registrationApp(backendInstance);
-const routeInstance = (registrationInstance,backendInstance);
+const backendInstance = db_queries(db)
+const routeInstance = routes(backendInstance);
 
 
 app.engine('handlebars', engine({
@@ -47,40 +34,18 @@ app.use(express.json());
 
 
 // Index route
-app.get('/', async (req, res) => {
-    const numberPlate = await backendInstance.getAllRegistrations();
-    res.render('index', { numberPlate });
-});
+app.get('/', routeInstance.homeRoute);
 
 //Registration route (POST)
-app.post('/', async (req, res) => {
-
-    // Access the submitted data using req.body
-    const registrationNumber = req.body.number;
-  //  const select = req.body.city;
-    await backendInstance.insertIntoRegistrationPlateNumber(registrationNumber);
-    req.flash('invalid','Invalid registration number format');
-    res.redirect('/');
-
-});
+app.post('/', routeInstance.insertRoute);
 
 // Filter route (POST)
-app.post('/filter', async (req, res) => {
-    const selectedCity = req.body.city;
-    const filteredPlates = await backendInstance.filterRegistrationsByCity(selectedCity);
-    res.render('index', {filteredPlates});
-  
-});
+app.post('/filter',routeInstance.filterRoute);
 
 // Clear database route (POST)
-app.post('/clear', async (req, res) => {
-    await backendInstance.deleteRegistrations();
-    req.flash('alrt','Database successfully cleared!');
-    res.redirect('/');
-});
+app.post('/clear',routeInstance.clearingRoute);
 
-
-
+//PORT
 const PORT = process.env.PORT || 3034;
 app.listen(PORT, (req, res) => {
     console.log('We taking off on port:', PORT)

@@ -20,6 +20,7 @@
 <script>
 
     const alrt = document.querySelector('.alert');
+    const valid = document.querySelector('.valid')
     const invalid = document.querySelector('.invalid');
 
     if (alrt.innerText !== "") {
@@ -29,9 +30,16 @@
 
     }
 
+    if (valid.innerText !== "") {
+        setTimeout(function () {
+            valid.innerText = '';
+        }, 3000);
+
+    }
+
     if (invalid.innerText !== "") {
         setTimeout(function () {
-            alrt.innerText = '';
+            invalid.innerText = '';
         }, 3000);
 
     }
