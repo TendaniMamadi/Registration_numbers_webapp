@@ -35,26 +35,28 @@ describe('db_queries Module', function () {
 
     it('should be able add registration number to database', async function () {
         // Insert a registration plate into the database
-    
+
         await dbQueries.insertIntoRegistrationPlateNumber('CA 242424');
         const registrations = await dbQueries.getAllRegistrations();
-       
 
-        assert.deepEqual([{registration_number: 'CA 242424'}],registrations );
+
+        assert.deepEqual([{ registration_number: 'CA 242424' }], registrations);
 
     });
 
-    it('should be able to catch duplicates', async function () {
-        // Insert a registration plate into the database
-        await dbQueries.insertIntoRegistrationPlateNumber('CA 230303');
+    describe('Registration Plate Duplicate Check', function () {
+        it('should be able to catch duplicates', async function () {
+            // Insert a registration plate into the database
+            await dbQueries.checkAndInsertRegistration('CA 230303');
 
-        // Attempt to insert the same registration plate, which should fail
-        try {
-            await dbQueries.insertIntoRegistrationPlateNumber('CA 230303');
-            assert.fail('Registration number already exist.');
-        } catch (error) {
-            assert.strictEqual(error.message, 'Registration number already exist.');
-        }
+            // Attempt to insert the same registration plate, which should fail
+            try {
+                await dbQueries.checkAndInsertRegistration('CA 230303');
+                assert.fail('Registration number already exists.'); // Fail the test if no error is thrown
+            } catch (error) {
+                assert.strictEqual(error.message, 'Registration number already exists.');
+            }
+        });
     });
 
 

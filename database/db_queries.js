@@ -41,45 +41,24 @@ export default function db_queries(db) {
 
 
     // Function to check for duplicates in the database
-    async function checkForDuplicateRegistration(registration_number) {
+    async function checkAndInsertRegistration(registration_number) {
         try {
-            // Use INSERT query with ON CONFLICT
-            const query = `
-                INSERT INTO registrations (registration_number)
-                VALUES ($1)
-                ON CONFLICT (registration_number) DO NOTHING;`;
+            // Check if the registration number already exists
+            const exists = await db.getAllRegistrations(registration_number);
 
-            await pool.query(query, [registration_number]);
-            return 'Registration number added successfully';
+            if (exists) {
+                return 'Registration number exists';
+            } else {
+                // Insert the registration number into the database
+                await db.insertIntoRegistrationPlateNumber(registration_number);
+                return 'Registration number added successfully';
+            }
         } catch (error) {
-            throw new Error('Error inserting registration number: ' + error.message);
+            throw new Error('Error checking/inserting registration number: ' + error.message);
         }
     }
 
 
-
-
-    // async function checkForDuplicateRegistration(registration_number) {
-    //     try {
-    //         // Query the database to check if the registration number already exists
-    //         const query = 'SELECT COUNT(*) FROM registrations WHERE registration_number = $1';
-    //         const result = await db.query(query, [registration_number]);
-
-    //         // If the count is greater than 0, the registration_number is a duplicate
-    //         const isDuplicate = result.rows[0].count > 0;
-
-    //         if (isDuplicate) {
-    //             return 'Registration number already exists';
-    //         } else {
-    //             // Insert the registration number into the database
-    //             const insertQuery = 'INSERT INTO registrations (registration_number) VALUES ($1)';
-    //             await db.query(insertQuery, [registration_number]);
-    //             return 'Registration number added successfully';
-    //         }
-    //     } catch (error) {
-    //         throw new Error('Error checking for duplicate registration: ' + error.message);
-    //     }
-    // }
 
 
     //displays everything that has been inserted
@@ -130,7 +109,7 @@ export default function db_queries(db) {
         filterRegistrationsByCity,
         getCityID,
         deleteRegistrations,
-        checkForDuplicateRegistration
+        checkAndInsertRegistration
     }
 
 }
