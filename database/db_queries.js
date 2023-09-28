@@ -10,7 +10,7 @@ export default function db_queries(db) {
                 return
             }
         } catch (error) {
-            throw new Error('Error inserting registration: ' + error.message);
+            throw new Error('Invalid registration entered: ' + error.message);
         }
 
     }
