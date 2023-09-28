@@ -1,119 +1,86 @@
-/* Reset default styles */
-body, h1, p, ul, li, form, select, button {
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
     margin: 0;
     padding: 0;
- 
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    scroll-behavior: smooth;
+    font-family: 'Poppins', sans-serif;
 }
 
-/* Apply a background color and set font styles for the body */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0; /* Set your preferred background color */
-    height: 100vh;
-    overflow: hidden;
-}
-
-
-/* Center the container vertically and horizontally */
-.centerDiv {
+    background-color: #f0f0f0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    margin: 0;
+    padding: 0;
 }
 
-/* Style the container for the forms and list */
-.container {
-    background-color: #fff;
+h1 {
+    text-align: center;
+}
+
+.button-container {
+    text-align: center;
+    background-color: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Style the header and form labels */
-h1 {
-    font-size: 24px;
-    text-align: center;
-    margin-bottom: 20px;
+i{
+    font-size: 3rem;
+    color: skyblue;
 }
 
-.label {
-    font-size: 18px;
-    margin-bottom: 5px;
+.sideByside1{
+    display: flex;
+   
 }
 
-/* Style the text input and select dropdown */
+
+.input,
+.filter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
 input[type="text"],
 select {
     width: 100%;
     padding: 10px;
-    margin-bottom: 15px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 4px;
 }
 
-/* Style the buttons */
-button {
-    padding: 10px 20px;
-    background-color: #007bff; /* Set your preferred button color */
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.button-container button {
+    margin: 0 10px;
+    vertical-align: middle;
 }
 
-/* Add some spacing between form elements */
-.form-group {
-    margin-bottom: 15px;
-}
-
-/* Style the list of registration plates */
-ul.d-flex {
+ul {
     list-style-type: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
 }
 
-/* Style individual plates */
 .plates {
     background-color: yellow;
     text-align: center;
-    color: grey;
-    padding: 5px 10px;
-    margin: 5px;
+    justify-content: center;
+    align-items: center;
+    color: rgb(8, 7, 7);
     border: 1px solid black;
     border-radius: 5px;
     font-weight: bold;
     cursor: pointer;
+    width: 50%;
     transition: background-color 0.2s ease-in-out;
+    margin-bottom: 10px;
 }
-
-/* Change plate background on hover */
-.plates:hover {
-    background-color: yellow; /* Darker shade of your button color */
-}
-
-/* Style the flash message */
-.alert {
-    background-color: red; 
-    color: #fff;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-    margin-top: 10px;
-}
-
-.invalid {
-    background-color: red; 
-    color: #eb0a0a;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-    margin-top: 10px;
-}
-
-
-
-

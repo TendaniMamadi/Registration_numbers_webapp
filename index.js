@@ -7,13 +7,15 @@ import db_queries from './database/db_queries.js';
 import pgPromise from 'pg-promise';
 import 'dotenv/config';
 import routes from './routes/routes.js';
+import FrontEndLogic from './factory function/registrationApp.js';
 
 const app = express();
 const connectionString = process.env.DATABASE_URL
 const pgp = pgPromise({});
 const db = pgp(connectionString);
+const frontendInstance = FrontEndLogic();
 const backendInstance = db_queries(db)
-const routeInstance = routes(backendInstance);
+const routeInstance = routes(frontendInstance,backendInstance);
 
 
 app.engine('handlebars', engine({

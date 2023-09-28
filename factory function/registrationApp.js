@@ -26,7 +26,7 @@ export default function FrontEndLogic() {
     function errorMessage(input) {
 
         let errorMsg = ""
-        let regEx = /^(CA|CJ|ND|CY)\s?\d{1,3}\s?\d{1,3}$/i
+        let regEx = /^[a-zA-Z]{2}\s*\d+(\s*[-]\s*\d+)*$/;
 
 
         if (!regEx.test(input)) {

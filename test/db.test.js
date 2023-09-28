@@ -44,20 +44,21 @@ describe('db_queries Module', function () {
 
     });
 
-    describe('Registration Plate Duplicate Check', function () {
-        it('should be able to catch duplicates', async function () {
-            // Insert a registration plate into the database
-            await dbQueries.checkAndInsertRegistration('CA 230303');
 
-            // Attempt to insert the same registration plate, which should fail
-            try {
-                await dbQueries.checkAndInsertRegistration('CA 230303');
-                assert.fail('Registration number already exists.'); // Fail the test if no error is thrown
-            } catch (error) {
-                assert.strictEqual(error.message, 'Registration number already exists.');
-            }
-        });
+
+    it('should be able to catch duplicates', async function () {
+        // Insert a registration plate into the database
+        await dbQueries.insertIntoRegistrationPlateNumber('CA 230303');
+
+        // Attempt to insert the same registration plate, which should fail
+        try {
+            await dbQueries.alreadyExistInDatabase('CA 230303');
+            assert.fail('Registration number already exists.'); // Fail the test if no error is thrown
+        } catch (error) {
+            assert.strictEqual(error.message, 'Registration number already exists.');
+        }
     });
+
 
 
     it('should retrieve filtered city', async function () {

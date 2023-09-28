@@ -1,80 +1,75 @@
 <body>
-    <div class="centerDiv">
-        <section class="container">
-            <form action="/" method="POST">
 
-                <h1>Registration Numbers</h1>
+    <h1>Registration Numbers</h1>
+    <div class="button-container">
 
-                <div class="input">
+        <div class="sideByside">
+            <form action="/" method="POST" class="input">
+                <input type="text" name="number" spellcheck="true" maxlength="10" placeholder="Enter registration"
+                    required>
+                <button type="submit" class="addingButton" ><i class='bx bxs-file-plus'></i></button>
+            </form>
+        </div>
 
-                    <label for="number">Registration Number:</label>
-                    <input type="text" name="number" spellcheck="true" maxlength="10" placeholder="Please enter registration" required><br>
-                    <!-- Flash message for invalid -->
-                    <div class="alert alert-success invalid">
-                        {{#if messages.alrt}}
-                        <p class="messages" style="color: green;">{{messages.alrt}}</p>
-                        {{/if}}
-
-                         {{#if messages.valid}}
-                        <p class="messages" style="color: green;">{{messages.valid}}</p>
-                        {{/if}}
-
-                        {{#if messages.invalid}}
-                        <p class="messages" style="color: red;">{{messages.invalid}}</p>
-                        {{/if}}
-                    </div>
-                </div>
-
-                <button type="submit" class="addingButton" value="Add">Registration Add</button>
+        <div class="sideByside1">
+            <form action="/filter" method="POST" class="filter">
+                <select name="city" id="filterCity" required>
+                    <option value=""disabled selected style="color: rgb(206, 27, 27);">Select a city</option>
+                    <option value="">All</option>
+                    <option value="CA">Cape Town</option>
+                    <option value="CY">Bellville</option>
+                    <option value="ND">Durban</option>
+                    <option value="CJ">Paarl</option>
+                </select>
+                <button type="submit" class="DisplayBtn"><i class='bx bx-filter-alt' ></i></button>
             </form>
             <div>
-                <ul class="d-flex flex-wrap">
-                    {{#each numberPlate}}
 
-                    <li class="plates">{{this.registration_number}}</li>
-
-                    {{/each}}
-                </ul>
+                <form action="/clear" method="POST">
+                    <button type="submit" class="clear"><i class='bx bxs-trash' ></i></button>
+                </form>
             </div>
-            <br>
-            <form action="/filter" method="POST">
-                <div>
-                    <label for="city">Filter by City:</label>
-                    <select name="city" id="filterCity" required>
-                        <option value=""></option>
-                        <option value="">All</option>
-                        <option value="CA">Cape Town</option>
-                        <option value="CY">Bellville</option>
-                        <option value="ND">Durban</option>
-                        <option value="CJ">Paarl</option>
-                    </select>
-                </div>
-                <br>
-                <button type="submit" class="DisplayBtn" value="Display">Registration filter</button>
-            </form>
 
-            <!-- Display filtered registrations -->
-            <h2>Filtered Registrations</h2>
-            <ul class="d-flex flex-wrap">
+        </div>
+
+        <div class="displayRegistration">
+            <ul>
+                {{#each numberPlate}}
+                <li class="plates">{{this.registration_number}}</li>
+                {{/each}}
+
                 {{#each filteredPlates}}
                 <li class="plates">{{this.registration_number}}</li>
                 {{/each}}
             </ul>
+        </div>
 
-            <!-- Flash message for clearing the database -->
-            <div class="d-flex flex-wrap">
-                <form action="/clear" method="POST">
-                    <button type="submit">Clear Database</button>
-                </form>
+        <div class="flashMessages">
+            {{#if messages.alrt}}
+            <div class="alert">
+                <p class="messages" style="color: green;">{{messages.alrt}}</p>
             </div>
+            {{/if}}
 
+            {{#if messages.valid}}
+            <div class="alert invalid">
+                <p class="messages" style="color: green;">{{messages.valid}}</p>
+            </div>
+            {{/if}}
 
-        </section>
+            {{#if messages.notValid}}
+            <div class="alert  invalid">
+                <p class="messages" style="color: red;">{{messages.notValid}}</p>
+            </div>
+            {{/if}}
+
+            {{#if messages.alreadyExists}}
+            <div class="alert  invalid">
+                <p class="messages" style="color: red;">{{messages.alreadyExists}}</p>
+            </div>
+            {{/if}}
+        </div>
     </div>
-
-
-
-
 </body>
 
 </html>
