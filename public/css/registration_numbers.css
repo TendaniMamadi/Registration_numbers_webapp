@@ -9,20 +9,30 @@
     outline: none;
     scroll-behavior: smooth;
     font-family: 'Poppins', sans-serif;
+
 }
 
 body {
+    background-image: url('/ville-kaisla-HNCSCpWrVJA-unsplash.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
     background-color: #f0f0f0;
+    background-position: center center; /* Center the background image both horizontally and vertically */
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
+
+
 
 h1 {
     text-align: center;
+    height: 20vh;
+    color: #f0f0f0;
 }
 
 .button-container {
@@ -33,14 +43,14 @@ h1 {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-i{
+i {
     font-size: 3rem;
-    color: skyblue;
+    color: rgb(45, 147, 205);
 }
 
-.sideByside1{
+.sideByside1 {
     display: flex;
-   
+
 }
 
 

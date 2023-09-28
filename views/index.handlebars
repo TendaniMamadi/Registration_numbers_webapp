@@ -1,6 +1,6 @@
 <body>
 
-    <h1>Registration Numbers</h1>
+    <h1 style="color: white;" style="position: fixed;">Registration Numbers</h1>
     <div class="button-container">
 
         <div class="sideByside">
@@ -14,7 +14,7 @@
         <div class="sideByside1">
             <form action="/filter" method="POST" class="filter">
                 <select name="city" id="filterCity" required>
-                    <option value=""disabled selected style="color: rgb(206, 27, 27);">Select a city</option>
+                    <option value=""disabled selected style="color: grey;">Select a city</option>
                     <option value="">All</option>
                     <option value="CA">Cape Town</option>
                     <option value="CY">Bellville</option>
@@ -32,6 +32,7 @@
 
         </div>
 
+
         <div class="displayRegistration">
             <ul>
                 {{#each numberPlate}}
@@ -43,7 +44,6 @@
                 {{/each}}
             </ul>
         </div>
-
         <div class="flashMessages">
             {{#if messages.alrt}}
             <div class="alert">

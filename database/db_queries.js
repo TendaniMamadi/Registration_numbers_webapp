@@ -2,7 +2,7 @@ export default function db_queries(db) {
 
     async function getCityID(registration_number) {
         try {
-            let firstTwoLettersOfTheRegNumber = registration_number.substring(0, 2);
+            let firstTwoLettersOfTheRegNumber = registration_number.substring(0, 2).toUpperCase();
             const result = await db.oneOrNone(`SELECT city_id FROM cities WHERE city_code = $1`, [firstTwoLettersOfTheRegNumber])
             if (result != null) {
                 return result;
@@ -17,9 +17,9 @@ export default function db_queries(db) {
 
 
     async function insertIntoRegistrationPlateNumber(registration_number) {
+        registration_number =registration_number.toUpperCase()
         let exist = await db.oneOrNone('SELECT registration_number FROM registrations WHERE registration_number = $1', [registration_number]);
         let cityID =  await getCityID(registration_number)
-
         if (!exist) {
             await db.none(`INSERT INTO registrations (registration_number,city_id) VALUES ($1,$2)`, [registration_number,cityID.city_id]);
         }
@@ -48,7 +48,7 @@ export default function db_queries(db) {
            
 
             let filt = await db.any(query, [selectedCity.city_id]);
-            console.log(filt);
+        
             return (filt);
         } else {
             const allQuery = 'SELECT registration_number FROM registrations';
