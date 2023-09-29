@@ -1,5 +1,6 @@
 import assert from 'assert'
 import db_queries from '../database/db_queries.js';
+import FrontEndLogic from '../factory function/registrationApp.js';
 import pgPromise from 'pg-promise';
 import 'dotenv/config';
 
@@ -61,15 +62,14 @@ describe('db_queries Module', function () {
 
 
 
-    // it('should send error messages', async function () {
-    //     // Attempt to insert an invalid registration plate
-    //     try {
-    //         await dbQueries.insertIntoRegistrationPlateNumber('BT 32 XN GP');
-    //         assert.fail('Invalid registration entered.');
-    //     } catch (error) {
-    //         assert.deepEqual(error.message, 'Invalid registration entered.');
-    //     }
-    // });
+    it('should send error messages', async function () {
+        // Attempt to insert an invalid registration plate
+        let front = FrontEndLogic();
+        front.errorMessage('BT 32 XN GP');
+        front.errorMessage('Invalid registration entered.');
+        assert.equal('Enter valid registration.', front.errorMessage());
+
+    });
 
 
 
