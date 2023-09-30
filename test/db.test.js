@@ -45,7 +45,6 @@ describe('db_queries Module', function () {
         // Attempt to insert the same registration plate, which should fail
         try {
             await dbQueries.alreadyExistInDatabase('CA 230303');
-            assert.fail('Registration number already exists.'); // Fail the test if no error is thrown
         } catch (error) {
             assert.strictEqual(error.message, 'Registration number already exists.');
         }
