@@ -29,10 +29,18 @@ describe('db_queries Module', function () {
         // Insert a registration plate into the database
 
         await dbQueries.insertIntoRegistrationPlateNumber('CA 242424');
+        await dbQueries.insertIntoRegistrationPlateNumber('CJ 242424');
+        await dbQueries.insertIntoRegistrationPlateNumber('CY 242424');
+        await dbQueries.insertIntoRegistrationPlateNumber('ND 242424');
         const registrations = await dbQueries.getAllRegistrations();
 
 
-        assert.deepEqual([{ registration_number: 'CA 242424' }], registrations);
+        assert.deepEqual([
+            { registration_number: 'CA 242424' },
+            { registration_number: 'CJ 242424' },
+            { registration_number: 'CY 242424' },
+            { registration_number: 'ND 242424' }
+        ], registrations);
 
     });
 
@@ -54,8 +62,14 @@ describe('db_queries Module', function () {
 
     it('should retrieve filtered city', async function () {
         // Retrieve registrations for a specific city
+
+        await dbQueries.insertIntoRegistrationPlateNumber('CA 242424');
+        await dbQueries.insertIntoRegistrationPlateNumber('CJ 242424');
+        await dbQueries.insertIntoRegistrationPlateNumber('CY 242424');
+        await dbQueries.insertIntoRegistrationPlateNumber('ND 242424');
+
         const registrations = await dbQueries.filterRegistrationsByCity("CA");
-        assert.strictEqual(0, registrations.length);
+        assert.strictEqual(1, registrations.length);
 
     });
 
