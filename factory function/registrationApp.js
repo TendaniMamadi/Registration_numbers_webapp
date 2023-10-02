@@ -26,8 +26,7 @@ export default function FrontEndLogic() {
     function errorMessage(input) {
 
         let errorMsg = ""
-        let regEx = /^[a-zA-Z]{2}\s*\d{5,6}(\s*[-]\s*\d+)*$/;
-        
+        let regEx = /^[a-zA-Z]{2}\s*\d+(\s*[-]\s*\d+)*$/;
 
 
         if (!regEx.test(input)) {
