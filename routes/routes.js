@@ -8,7 +8,8 @@ export default function routes(frontendInstance, logic) {
         // Access input data using req.body
         const registrationNumber = req.body.number;
         let reg = registrationNumber.substring(2)
-        if (reg.length >= 6) {
+
+        if (reg.length >= 5) {
             let regEx = frontendInstance.errorMessage(registrationNumber);
             let catchingDuplicates = await logic.alreadyExistInDatabase(registrationNumber);
     
