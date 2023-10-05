@@ -18,7 +18,7 @@ export default function routes(frontendInstance, logic) {
                 } else {
                     if (await logic.getCityID(registrationNumber) == null) {
     
-                        req.flash('notValid', 'Invalid registration entered');
+                        req.flash('notValid', 'City ID for registration entered is not supported');
     
                     } else {
     
@@ -41,6 +41,10 @@ export default function routes(frontendInstance, logic) {
     const filterRoute = async (req, res) => {
         const selectedCity = req.body.city;
         const filteredPlates = await logic.filterRegistrationsByCity(selectedCity);
+
+        if(filteredPlates == ''){
+            req.flash('notValid', 'No registration for selected city')
+        }
         res.render('index', { filteredPlates });
     }
 

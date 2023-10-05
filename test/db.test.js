@@ -79,7 +79,7 @@ describe('db_queries Module', function () {
         // Attempt to insert an invalid registration plate
         let front = FrontEndLogic();
         front.errorMessage('BT 32 XN GP');
-        front.errorMessage('Invalid registration entered.');
+        front.errorMessage('City ID for registration entered is not supported.');
         assert.equal('Enter valid registration.', front.errorMessage());
 
     });

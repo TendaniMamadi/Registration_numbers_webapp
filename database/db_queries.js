@@ -10,7 +10,7 @@ export default function db_queries(db) {
                 return null
             }
         } catch (error) {
-            throw new Error('Invalid registration entered: ' + error.message);
+            throw new Error('City ID for registration entered is not supported: ' + error.message);
         }
 
     }

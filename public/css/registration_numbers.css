@@ -78,9 +78,13 @@ select {
 
 ul {
     list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    
 }
 
 .plates {
+   
     background-color: yellow;
     text-align: center;
     justify-content: center;
@@ -90,7 +94,8 @@ ul {
     border-radius: 5px;
     font-weight: bold;
     cursor: pointer;
-    width: 50%;
+    width: 40%;
     transition: background-color 0.2s ease-in-out;
     margin-bottom: 10px;
+    margin-right: 10px;
 }
