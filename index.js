@@ -7,7 +7,7 @@ import db_queries from './database/db_queries.js';
 import pgPromise from 'pg-promise';
 import 'dotenv/config';
 import routes from './routes/routes.js';
-import FrontEndLogic from './factory function/registrationApp.js';
+import FrontEndLogic from './services/registrationApp.js';
 
 const app = express();
 const connectionString = process.env.DATABASE_URL
