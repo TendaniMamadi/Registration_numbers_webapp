@@ -1,5 +1,5 @@
 import assert from 'assert'
-import registrationApp from '../factory function/registrationApp.js'
+import registrationApp from '../services/registrationApp.js'
 
 describe('registration_numbers', function () {
 
