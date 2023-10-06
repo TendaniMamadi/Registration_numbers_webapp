@@ -48,7 +48,7 @@ app.post('/filter',routeInstance.filterRoute);
 app.post('/clear',routeInstance.clearingRoute);
 
 //PORT
-const PORT = process.env.PORT || 3034;
+const PORT = process.env.PORT || 3035;
 app.listen(PORT, (req, res) => {
     console.log('We taking off on port:', PORT)
 });

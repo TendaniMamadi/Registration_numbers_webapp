@@ -28,9 +28,8 @@ export default function FrontEndLogic() {
         let errorMsg = ""
         let regEx = /^[a-zA-Z]{2}\s*\d+(\s*[-]\s*\d+)*$/;
 
-
         if (!regEx.test(input)) {
-
+        
             errorMsg = "Enter valid registration.";
 
         } 

@@ -12,7 +12,7 @@ export default function routes(frontendInstance, logic) {
         if (reg.length >= 5) {
             let regEx = frontendInstance.errorMessage(registrationNumber);
             let catchingDuplicates = await logic.alreadyExistInDatabase(registrationNumber);
-
+           
             if (!regEx) {
                 if (catchingDuplicates) {
                     req.flash('alreadyExists', 'Registration entered already exists');
@@ -27,6 +27,9 @@ export default function routes(frontendInstance, logic) {
                         req.flash('valid', 'Registration number added successfully');
                     }
                 }
+
+            } else {
+                req.flash('notValid', regEx);
 
             }
         } else {
@@ -68,36 +71,3 @@ export default function routes(frontendInstance, logic) {
 
 
 
-// const insertRoute = async (req, res) => {
-//     // Access input data using req.body
-//     const registrationNumber = req.body.number;
-//     let reg = registrationNumber.substring(2)
-
-//     if (reg.length >= 5) {
-//         req.flash('notValid', 'Reg Too short');
-//     }
-
-
-//     let catchingDuplicates = await logic.alreadyExistInDatabase(registrationNumber);
-//     if (catchingDuplicates) {
-//         req.flash('alreadyExists', 'Registration entered already exists');
-//     }
-
-//     let regEx = frontendInstance.errorMessage(registrationNumber);
-//     if (!regEx) {
-//         if (await logic.getCityID(registrationNumber) == null) {
-
-//             req.flash('notValid', 'Registration entered is not supported');
-
-//         } else {
-
-//             await logic.insertIntoRegistrationPlateNumber(registrationNumber);
-//             req.flash('valid', 'Registration number added successfully');
-//         }
-//     }
-
-
-
-
-//     res.redirect('/');
-// }
