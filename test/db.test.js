@@ -36,10 +36,18 @@ describe('db_queries Module', function () {
 
 
         assert.deepEqual([
-            { registration_number: 'CA 242424' },
-            { registration_number: 'CJ 242424' },
-            { registration_number: 'CY 242424' },
-            { registration_number: 'ND 242424' }
+            {
+                "registration_number": "CA 242424"
+            },
+            {
+                "registration_number": "CJ 242424"
+            },
+            {
+                "registration_number": "CY 242424"
+            },
+            {
+                "registration_number": "ND 242424"
+            }
         ], registrations);
 
     });
@@ -99,7 +107,7 @@ describe('db_queries Module', function () {
         assert.deepEqual(registrations.length, 0);
     });
 
-    
+
 
     after(function () {
         db.$pool.end
