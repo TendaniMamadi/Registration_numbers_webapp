@@ -99,6 +99,8 @@ describe('db_queries Module', function () {
         assert.deepEqual(registrations.length, 0);
     });
 
+    
+
     after(function () {
         db.$pool.end
     })
